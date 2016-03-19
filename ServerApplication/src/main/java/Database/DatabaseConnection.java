@@ -32,10 +32,14 @@ public class DatabaseConnection {
 
     public void connectToDatabase() throws UnknownHostException {
 
-        mongoClient = new MongoClient("156.17.41.238", 27017);
+        mongoClient = new MongoClient("156.17.41.238", 27017); /// database on server
         database = mongoClient.getDatabase("endOfDay");
     }
+    public void closeDatabaseConnection(){
 
+        mongoClient.close();
+        System.out.println("Connection with MongoDB closed");
+    }
     public ArrayList<StockCompany> getCollection(String name ) {
         mongoCollection = database.getCollection(name);
 
@@ -58,11 +62,11 @@ public class DatabaseConnection {
 
         Document document;
 
-        Date start = new SimpleDateFormat("yyyyMMdd", (Locale.ENGLISH)).parse("20140704"); /// data w formacie bazy
+        Date start = new SimpleDateFormat("yyyyMMdd", (Locale.ENGLISH)).parse("20140704"); /// data in MongoDB format, should be receive in yyyyMMdd format
         Date end = new SimpleDateFormat("yyyyMMdd", (Locale.ENGLISH)).parse("20140917");
         BasicDBObject query = new BasicDBObject();
-        query.put("Date: ", new BasicDBObject("$gt", start).append("$lte",end)); /// $gt - greater than $lte - less
-        mongoCollection = database.getCollection("PZU");
+        query.put("Date: ", new BasicDBObject("$gt", start).append("$lte",end)); /// $gt - greater than $lte - less; "Date: " must be the same like in base
+        mongoCollection = database.getCollection("PGNIG");
         FindIterable<Document> dbObjects = mongoCollection.find(query);
         MongoCursor<Document> cursor =  dbObjects.iterator();
         while(cursor.hasNext())

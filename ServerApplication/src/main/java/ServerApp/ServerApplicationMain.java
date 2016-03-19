@@ -23,9 +23,10 @@ public class ServerApplicationMain {
             e.printStackTrace();
         }
 
-       // stockCompanyArrayList = database.getCollection("PZU");
+   //     stockCompanyArrayList = database.getCollection("PZU");
 
         database.findDocByDate();
+        database.closeDatabaseConnection();
     }
 
 
