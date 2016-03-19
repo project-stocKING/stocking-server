@@ -13,13 +13,13 @@ public class StockCompany {
     private double maxValue;
     private double minValue;
     private double endValue;
-    private float volume;
+    private double volume;
 
 
     public StockCompany() {
 
     }
-    public StockCompany(String name, Date date, double startValue, double minValue, double maxValue, double endValue, float volume) {
+    public StockCompany(String name, Date date, double startValue, double minValue, double maxValue, double endValue, double volume) {
         this.name = name;
         this.date = date;
         this.startValue = startValue;
@@ -79,18 +79,17 @@ public class StockCompany {
 
     @Override
     public String toString() {
-        return "File{" +
-                "name='" + name + '\'' +
+        return
+                "Name='" + name + '\'' +
                 ", date=" + date +
                 ", startValue=" + startValue +
                 ", maxValue=" + maxValue +
                 ", minValue=" + minValue +
                 ", endValue=" + endValue +
-                ", volume=" + volume +
-                '}';
+                ", volume=" + volume;
     }
 
-    public float getVolume() {
+    public double getVolume() {
         return volume;
     }
 
