@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2abf606d-b232-4940-a540-0964f3f82043" name="Default" comment="">
+    <list default="true" id="2abf606d-b232-4940-a540-0964f3f82043" name="Default" comment="connection to remote db, add closing connection">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/Database/DatabaseConnection.class" afterPath="$PROJECT_DIR$/target/classes/Database/DatabaseConnection.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/Database/DatabaseConnection.java" afterPath="$PROJECT_DIR$/src/main/java/Database/DatabaseConnection.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/ServerApp/ServerApplicationMain.java" afterPath="$PROJECT_DIR$/src/main/java/ServerApp/ServerApplicationMain.java" />
     </list>
     <ignored path="serverApp.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -687,7 +685,7 @@
       <created>1458419992020</created>
       <option name="number" value="Default" />
       <updated>1458419992020</updated>
-      <workItem from="1458419994917" duration="7512000" />
+      <workItem from="1458419994917" duration="7551000" />
     </task>
     <task id="LOCAL-00001" summary="Add finding documents by date">
       <created>1458425311823</created>
@@ -695,11 +693,17 @@
       <option name="project" value="LOCAL" />
       <updated>1458425311823</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="connection to remote db, add closing connection">
+      <created>1458428169894</created>
+      <option name="number" value="00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1458428169894</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7512000" />
+    <option name="totallyTimeSpent" value="7551000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
@@ -762,7 +766,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add finding documents by date" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add finding documents by date" />
+    <MESSAGE value="connection to remote db, add closing connection" />
+    <option name="LAST_COMMIT_MESSAGE" value="connection to remote db, add closing connection" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
