@@ -4,6 +4,7 @@ import Database.DatabaseConnection;
 import Models.StockCompany;
 
 import java.net.UnknownHostException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 /**
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  */
 public class ServerApplicationMain {
 
-    public static void main( String[] args ) {
+    public static void main( String[] args ) throws ParseException {
 
         DatabaseConnection database = new DatabaseConnection();
         ArrayList<StockCompany> stockCompanyArrayList = new ArrayList<StockCompany>();
@@ -22,6 +23,11 @@ public class ServerApplicationMain {
             e.printStackTrace();
         }
 
-        stockCompanyArrayList = database.getCollection("PZU");
+       // stockCompanyArrayList = database.getCollection("PZU");
+
+        database.findDocByDate();
     }
+
+
+
 }

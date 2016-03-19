@@ -1,18 +1,22 @@
 package Database;
 
 import Models.StockCompany;
-import com.mongodb.Cursor;
-import com.mongodb.MongoClient;
+import com.mongodb.*;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import com.mongodb.client.model.Filters.*;
+import org.bson.conversions.Bson;
 
 import java.net.UnknownHostException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Beata on 2016-03-17.
@@ -28,8 +32,8 @@ public class DatabaseConnection {
 
     public void connectToDatabase() throws UnknownHostException {
 
-        mongoClient = new MongoClient();
-        database = mongoClient.getDatabase("parserDB");
+        mongoClient = new MongoClient("156.17.41.238", 27017);
+        database = mongoClient.getDatabase("endOfDay");
     }
 
     public ArrayList<StockCompany> getCollection(String name ) {
@@ -42,7 +46,6 @@ public class DatabaseConnection {
             doc = cursor.next();
             stockCompany = new StockCompany(doc.getString("Name: "), doc.getDate("Date: "), doc.getDouble("startValue: "),
                     doc.getDouble("maxValue: "), doc.getDouble("minValue: "), doc.getDouble("endValue: "), doc.getDouble("Volume: "));
-
             System.out.println(stockCompany.toString());
             stockCompanyArrayList.add(stockCompany);
 
@@ -50,4 +53,28 @@ public class DatabaseConnection {
         System.out.println("size array " + stockCompanyArrayList.size());
         return stockCompanyArrayList;
     }
+
+    public void  findDocByDate() throws ParseException{
+
+        Document document;
+
+        Date start = new SimpleDateFormat("yyyyMMdd", (Locale.ENGLISH)).parse("20140704"); /// data w formacie bazy
+        Date end = new SimpleDateFormat("yyyyMMdd", (Locale.ENGLISH)).parse("20140917");
+        BasicDBObject query = new BasicDBObject();
+        query.put("Date: ", new BasicDBObject("$gt", start).append("$lte",end)); /// $gt - greater than $lte - less
+        mongoCollection = database.getCollection("PZU");
+        FindIterable<Document> dbObjects = mongoCollection.find(query);
+        MongoCursor<Document> cursor =  dbObjects.iterator();
+        while(cursor.hasNext())
+        {
+            document = cursor.next();
+            System.out.println(document.toString());
+
+        }
+
+
+    }
+
+
+
 }
