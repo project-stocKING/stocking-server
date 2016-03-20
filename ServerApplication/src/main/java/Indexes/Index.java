@@ -1,4 +1,4 @@
-package Computing;
+package Indexes;
 
 
 public interface Index 

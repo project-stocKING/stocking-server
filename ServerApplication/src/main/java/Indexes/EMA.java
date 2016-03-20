@@ -1,6 +1,4 @@
-package Computing;
-
-import java.util.List; 
+package Indexes;
 
 public class EMA implements Index
 { 
