@@ -1,26 +1,25 @@
 package Database;
 
 import Models.StockCompany;
-import com.mongodb.*;
+import com.mongodb.BasicDBObject;
+import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-import com.mongodb.client.model.Filters.*;
-import org.bson.conversions.Bson;
 
 import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 /**
  * Created by Beata on 2016-03-17.
  */
+
 public class DatabaseConnection {
 
     MongoClient mongoClient;
