@@ -1,11 +1,8 @@
 package ServerApp;
 
-import Database.DatabaseConnection;
-import Models.StockCompany;
+import Communication.RequestListener;
 
-import java.net.UnknownHostException;
 import java.text.ParseException;
-import java.util.ArrayList;
 
 /**
  * Created by Beata on 2016-03-17.
@@ -14,7 +11,9 @@ public class ServerApplicationMain {
 
     public static void main( String[] args ) throws ParseException {
 
-        DatabaseConnection database = new DatabaseConnection();
+        RequestListener requestListener = new RequestListener(5001);
+
+        /*DatabaseConnection database = new DatabaseConnection();
         ArrayList<StockCompany> stockCompanyArrayList = new ArrayList<StockCompany>();
 
         try {
@@ -25,7 +24,7 @@ public class ServerApplicationMain {
 
        // stockCompanyArrayList = database.getCollection("PZU");
 
-        database.findDocByDate();
+        database.findDocByDate();*/
     }
 
 
