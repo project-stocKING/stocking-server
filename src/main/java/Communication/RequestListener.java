@@ -43,8 +43,23 @@ public class RequestListener
 
         try
         {
-            client = server.accept();
-            System.out.println("Client accepted");
+            while(true) {
+                String line;
+                client = server.accept();
+                System.out.println("Client accepted");
+                in = new BufferedReader(new InputStreamReader(
+                        client.getInputStream()));
+                out = new PrintWriter(client.getOutputStream(),
+                        true);
+
+                while((line = in.readLine()) != null)
+                {
+                    System.out.println(line);
+                    out.println(line);
+                }
+                client.close();
+
+            }
         }
         catch (IOException ex)
         {
@@ -52,35 +67,5 @@ public class RequestListener
             System.exit(1);
         }
 
-        try
-        {
-            in = new BufferedReader(new InputStreamReader(
-                    client.getInputStream()));
-            out = new PrintWriter(client.getOutputStream(),
-                    true);
-        }
-        catch (IOException e)
-        {
-            System.out.println("Read failed");
-            System.exit(-1);
-        }
-
-        while (true)
-        {
-            try
-            {
-                String line = in.readLine();        //W linii zawarta byłaby nazwa spółki i dalej nazwy wskaźników
-                if(line != null)
-                {
-                    out.println(line);
-                }
-
-            }
-            catch (IOException e)
-            {
-                System.out.println("Read failed2");
-                System.exit(-1);
-            }
-        }
     }
 }
