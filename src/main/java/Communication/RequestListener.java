@@ -55,7 +55,7 @@ public class RequestListener
                 while((line = in.readLine()) != null)
                 {
                     System.out.println(line);
-                    out.println(line);
+                    out.println(new RequestParser().returnJSON(line));
                 }
                 client.close();
 

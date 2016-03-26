@@ -15,7 +15,7 @@ public class ServerApplicationMain {
 
         /*DatabaseConnection database = new DatabaseConnection();
         ArrayList<StockCompany> stockCompanyArrayList = new ArrayList<StockCompany>();
-
+x
         try {
             database.connectToDatabase();
         } catch (UnknownHostException e) {
