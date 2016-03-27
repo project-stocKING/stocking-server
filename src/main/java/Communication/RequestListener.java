@@ -18,15 +18,13 @@ public class RequestListener
 
     public RequestListener(int portNumber)
     {
-
         this.portNumber = portNumber;
         listen();
     }
 
     private void listen()
     {
-        BufferedReader in = null;
-        PrintWriter out = null;
+
         ServerSocket server = null;
         Socket client = null;
 
@@ -41,30 +39,20 @@ public class RequestListener
             System.exit(1);
         }
 
-        try
+        while(true)
         {
-            while(true) {
-                String line;
+            try
+            {
                 client = server.accept();
                 System.out.println("Client accepted");
-                in = new BufferedReader(new InputStreamReader(
-                        client.getInputStream()));
-                out = new PrintWriter(client.getOutputStream(),
-                        true);
 
-                while((line = in.readLine()) != null)
-                {
-                    System.out.println(line);
-                    out.println(new RequestParser().returnJSON(line));
-                }
-                client.close();
+                new RequestParser(client).start();
 
             }
-        }
-        catch (IOException ex)
-        {
-            System.out.println("Accept failed: 4321");
-            System.exit(1);
+            catch(IOException ex)
+            {
+                System.out.println("I/O error" + ex);
+            }
         }
 
     }
