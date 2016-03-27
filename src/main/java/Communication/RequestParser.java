@@ -35,64 +35,14 @@ public class RequestParser extends Thread
         this.client = client;
     }
 
-   /* public void run()
-    {
-        try
-        {
-            inp = client.getInputStream();
-            brinp = new BufferedReader(new InputStreamReader(inp));
-            out = new DataOutputStream(client.getOutputStream());
-            pw = new PrintWriter(client.getOutputStream(), true);
-        }
-        catch (IOException e)
-        {
-            return;
-        }
-
-        String line;
-        while (true)
-        {
-            try
-            {
-                line = brinp.readLine();
-                System.out.println(line);
-                if ( line == null ) // || line.equalsIgnoreCase("QUIT")
-                {
-                    client.close();
-                    return;
-                }
-                else
-                {
-                    try
-                    {
-                        jsonResponse = objectMapper.writeValueAsString(line);
-                        System.out.println(client.getInetAddress());
-                        //pw.write(jsonResponse);
-                        out.writeBytes(jsonResponse);
-                        out.flush();
-                    }
-                    catch (JSONParseException ex)
-                    {
-
-                    }
-                }
-
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-                return;
-            }
-        }
-
-
-    }*/
-
     public void run()
     {
-        InputStream inp = null;
-        BufferedReader brinp = null;
-        DataOutputStream out = null;
+        initiateComponents();
+        respond();
+    }
+
+    private void initiateComponents()
+    {
         try
         {
             inp = client.getInputStream();
@@ -103,7 +53,10 @@ public class RequestParser extends Thread
         {
             return;
         }
+    }
 
+    private void respond()
+    {
         String line;
         while (true)
         {
@@ -127,5 +80,6 @@ public class RequestParser extends Thread
             }
         }
     }
+
 
 }
