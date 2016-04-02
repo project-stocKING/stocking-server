@@ -1,8 +1,10 @@
 package ServerApp;
 
-import Communication.RequestListener;
+import Database.EndOfDayDatabaseConnection;
+import Models.StockCompany;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 
 /**
  * Created by Beata on 2016-03-17.
@@ -11,22 +13,14 @@ public class ServerApplicationMain {
 
     public static void main( String[] args ) throws ParseException {
 
-        RequestListener requestListener = new RequestListener(5001);
+       // RequestListener requestListener = new RequestListener(5001);
 
-        /*DatabaseConnection database = new DatabaseConnection();
-        ArrayList<StockCompany> stockCompanyArrayList = new ArrayList<StockCompany>();
-x
-        try {
-            database.connectToDatabase();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
+        EndOfDayDatabaseConnection endOfDayDatabaseConnection = new EndOfDayDatabaseConnection();
+        ArrayList<StockCompany> stockCompanyArrayList;
+        stockCompanyArrayList = endOfDayDatabaseConnection.findByDate("20160211", "20160401", "PZU");
+
+        for (StockCompany st: stockCompanyArrayList) {
+            System.out.println(st.toString());
         }
-
-       // stockCompanyArrayList = database.getCollection("PZU");
-
-        database.findDocByDate();*/
     }
-
-
-
 }

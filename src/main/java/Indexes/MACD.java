@@ -16,7 +16,7 @@ public class MACD implements IStockIndex
         this.slowLength = slowLength;
     } 
     
-    @Override 
+    //@Override
     public double calculate() 
     { 
         double fastEMA = new EMA(fastLength, array).calculate();
