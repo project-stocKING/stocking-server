@@ -3,5 +3,5 @@ package Indexes;
 
 public interface IStockIndex
 {
-    public double calculate();
+    public int calculate();
 }
