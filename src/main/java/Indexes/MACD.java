@@ -12,11 +12,12 @@ public class MACD extends Index implements IStockIndex
     private ArrayList<Double> macd= new ArrayList<Double>(c_price.size()-slowLength+1);
     private ArrayList<Double> signal= new ArrayList<Double>(macd.size()-signalLength);
 
-    public MACD(int fastLength, int slowLength, int signalLength) {
+    public MACD(int fastLength, int slowLength, int signalLength, ArrayList<Double> c_price) {
         super("MACD");
         this.fastLength = fastLength;
         this.slowLength = slowLength;
         this.signalLength=signalLength;
+        this.c_price = (ArrayList<Double>)c_price.clone();
     }
 
     public int calculate() {
