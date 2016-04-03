@@ -1,11 +1,13 @@
 package Communication;
 
+import Database.EndOfDayDatabaseConnection;
 import Models.StockCompany;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.util.JSONParseException;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * Created by mike on 26.03.16.
@@ -22,6 +24,7 @@ public class RequestParser extends Thread
 
     private ObjectMapper objectMapper;  //Mapping the object to JSON
     private String jsonResponse;
+    private ArrayList<String> request;
 
     private InputStream inp = null;
     private BufferedReader brinp = null;
@@ -30,8 +33,6 @@ public class RequestParser extends Thread
 
     public RequestParser(Socket client)
     {
-        objectMapper = new ObjectMapper();
-        jsonResponse = null;
         this.client = client;
     }
 
@@ -43,6 +44,10 @@ public class RequestParser extends Thread
 
     private void initiateComponents()
     {
+        objectMapper = new ObjectMapper();
+        jsonResponse = null;
+        request = new ArrayList<String>();
+
         try
         {
             inp = client.getInputStream();
@@ -57,28 +62,65 @@ public class RequestParser extends Thread
 
     private void respond()
     {
-        String line;
         while (true)
         {
             try
             {
-                line = brinp.readLine();
-                if ((line == null) || line.equalsIgnoreCase("QUIT"))
+                String line  = brinp.readLine();
+                if ((line == null) || line.equalsIgnoreCase(""))
                 {
+                    parse();
+                    out.writeBytes(jsonResponse + "\r\n");
                     client.close();
                     return;
                 }
                 else
                 {
-                    jsonResponse = objectMapper.writeValueAsString(new StockCompany());
-                    out.writeBytes(jsonResponse + "\n\r");
-                    out.flush();
+                    request.add(line);
                 }
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
                 e.printStackTrace();
                 return;
             }
+            catch (Exception ex)
+            {
+                ex.printStackTrace();
+                return;
+            }
         }
+    }
+
+    //TODO: add obtaining more than one value
+    private void parse()
+    {
+        jsonResponse = request.get(0);                      //GET /value HTTP1.1
+        jsonResponse = jsonResponse.replace("/", "");       //remove /
+
+        String[] lines = jsonResponse.split(" ");
+
+        jsonResponse = lines[1];                            //value
+        jsonResponse = acquireJsonResponse(jsonResponse);
+    }
+
+    private String acquireJsonResponse(String toAcquire)
+    {
+
+        String returnValue = "notCompanies";
+        if(toAcquire.equals("companies"))
+        {
+            try
+            {
+                EndOfDayDatabaseConnection dbCon = new EndOfDayDatabaseConnection();
+                returnValue = dbCon.companies();
+            }
+            catch(Exception ex)
+            {
+                ex.pr   intStackTrace();
+            }
+        }
+        return returnValue;
     }
 
 
