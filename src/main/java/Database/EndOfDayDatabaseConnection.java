@@ -1,12 +1,14 @@
 package Database;
 
 import Models.StockCompany;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.mongodb.BasicDBObject;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.*;
+import com.mongodb.util.JSON;
 import org.bson.Document;
+import org.omg.CORBA.Environment;
 
 import java.net.UnknownHostException;
 import java.text.ParseException;
@@ -66,5 +68,11 @@ public class EndOfDayDatabaseConnection {
         query.put("Date: ", new BasicDBObject("$gt", startDate).append("$lte", endDate)); /// $gt - greater than $lte - less
 
         return getCollection(name, query);
+    }
+
+    public String companies()
+    {
+        MongoIterable<String> collection = database.listCollectionNames();
+        return JSON.serialize(collection);
     }
 }
