@@ -2,6 +2,7 @@ package Indexes;
 
 import Tools.EMA;
 
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 //Moving Average Convergence / Divergence
@@ -20,10 +21,10 @@ public class MACD extends Index implements IStockIndex
         this.c_price = (ArrayList<Double>)c_price.clone();
     }
 
-    public int calculate() {
+    public ArrayList<Result> calculate() {
         ArrayList<Double> fastEMA = new EMA(fastLength, c_price).calculate();
         ArrayList<Double> slowEMA = new EMA(slowLength, c_price).calculate();
-        double avg=0,diff=0,tmp=0;
+        double avg=0,diff=0,diffprev=0;
         double alpha=2/(signalLength+1);
         int result=0;
 
@@ -37,16 +38,23 @@ public class MACD extends Index implements IStockIndex
         for (int i=1; i<signal.size();i++)
             signal.add(macd.get(signalLength+i)*alpha+signal.get(i-1)*(1-alpha));
 
+        ArrayList<Result> results=new ArrayList<Result>();
+        boolean intersect;
         //checking intersect
         for (int i=signalLength;i>0;i--) {
-            diff = signal.get(i) - macd.get(i);
-            if(tmp>0 && diff<0)
-                result=1;
-            if (tmp<0 && diff>0)
-                result=2;
-            tmp=diff;
+            intersect= Line2D.linesIntersect(i-1,macd.get(i-1),i,macd.get(i),i-1,signal.get(i-1),i,signal.get(i));
+            if(intersect)
+            {
+                diff = macd.get(i) - signal.get(i);
+                diffprev= macd.get(i-1) - signal.get(i-1);
+                if(diffprev>0 && diff<0)
+                    result=2; //sell
+                else if (diffprev<0 && diff>0)
+                    result=1; //buy
+                results.add(new Result(signalLength-(i-1),result,this.getName())); //day (signalLength=actual day, so diff between them will be number of day from present) ,signal status, name
+            }
         }
-        return result; //0 nothing, 1 buy signal, 2 sell signal
+        return results;
     }
 
 

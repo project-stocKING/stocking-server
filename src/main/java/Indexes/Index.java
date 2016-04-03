@@ -1,9 +1,6 @@
 package Indexes;
 
-/**
- * Created by daniel on 25.03.16.
- */
-public class Index
+public abstract class Index
 {
     final String name;
 
