@@ -12,7 +12,7 @@ public class SMMA {
     public SMMA(int N, ArrayList<Double> c_price) {
         this.N = N;
         length = c_price.size() - N + 1;
-        this.c_price = (ArrayList<Double>) c_price.clone();
+        this.c_price = new ArrayList<Double>(c_price);
         smma = new ArrayList<Double>(length);
     }
 

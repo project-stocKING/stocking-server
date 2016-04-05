@@ -16,7 +16,7 @@ public class EMA
         this.N = N;
         alpha = 2.0 / (N + 1);
         length=c_price.size()-N+1;
-        this.c_price = (ArrayList<Double>)c_price.clone();
+        this.c_price = new ArrayList<Double>(c_price);
         ema = new ArrayList<Double>(length);
     }
 
@@ -27,8 +27,11 @@ public class EMA
             avg += c_price.get(i);
         avg/=N-1;
         ema.add(avg); //first value in list is a avg of (period-1) previous days
+
         for(int i=1; i<length;i++)
-            ema.add((c_price.get(N-1+i)*alpha)+(ema.get(i-1)*(1-alpha))); //ema(n)=c_price(n) * multiplier + ema(n-1) * (1-multiplier)
+            ema.add((c_price.get(N-1+i)*alpha)+(ema.get(i-1)*(1-alpha)));
+        //ema(n)=c_price(n) * multiplier + ema(n-1) * (1-multiplier)
+
         return ema;
     }
 

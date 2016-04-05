@@ -15,7 +15,7 @@ public class WMA {
     {
         this.N = N;
         length=c_price.size()-N+1;
-        this.c_price = (ArrayList<Double>)c_price.clone();
+        this.c_price = new ArrayList<Double>(c_price);
         wma= new ArrayList<Double>(length);
     }
 
@@ -23,14 +23,14 @@ public class WMA {
     {
         double avg;
         for(int i=1; i<N;i++)
-            alpha+=i; //sum of weights
+            alpha+=i; //sum of the weights
 
         for(int i=0; i<length;i++)
         {
             avg=0;
-            for(int w=0;w<N;w++) {
+            for(int w=0;w<N;w++)
                 avg += c_price.get(i + w) * (w + 1);
-            }
+
             avg/=alpha;
             wma.add(avg);
         }

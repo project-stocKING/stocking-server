@@ -18,15 +18,15 @@ public class MACD extends Index implements IStockIndex
         this.fastLength = fastLength;
         this.slowLength = slowLength;
         this.signalLength=signalLength;
-        this.c_price = (ArrayList<Double>)c_price.clone();
+        this.c_price = new ArrayList<Double>(c_price);
     }
 
     public ArrayList<Result> calculate() {
         ArrayList<Double> fastEMA = new EMA(fastLength, c_price).calculate();
         ArrayList<Double> slowEMA = new EMA(slowLength, c_price).calculate();
-        double avg=0,diff=0,diffprev=0;
-        double alpha=2/(signalLength+1);
-        int result=0;
+        ArrayList<Result> results=new ArrayList<Result>();
+        double avg=0,diff,diffprev, alpha=2/(signalLength+1);
+        boolean result=false, intersect;
 
         for(int i=0; i< slowEMA.size();i++)
             macd.add(fastEMA.get(slowLength-fastLength+1)-slowEMA.get(0));
@@ -38,8 +38,7 @@ public class MACD extends Index implements IStockIndex
         for (int i=1; i<signal.size();i++)
             signal.add(macd.get(signalLength+i)*alpha+signal.get(i-1)*(1-alpha));
 
-        ArrayList<Result> results=new ArrayList<Result>();
-        boolean intersect;
+
         //checking intersect
         for (int i=signalLength;i>0;i--) {
             intersect= Line2D.linesIntersect(i-1,macd.get(i-1),i,macd.get(i),i-1,signal.get(i-1),i,signal.get(i));
@@ -48,10 +47,11 @@ public class MACD extends Index implements IStockIndex
                 diff = macd.get(i) - signal.get(i);
                 diffprev= macd.get(i-1) - signal.get(i-1);
                 if(diffprev>0 && diff<0)
-                    result=2; //sell
+                    result=true; //sell
                 else if (diffprev<0 && diff>0)
-                    result=1; //buy
-                results.add(new Result(signalLength-(i-1),result,this.getName())); //day (signalLength=actual day, so diff between them will be number of day from present) ,signal status, name
+                    result=false; //buy
+                results.add(new Result(signalLength-(i-1),result,this.getName()));
+                //day (signalLength=actual day, so diff between them will be number of day from present) ,signal status, name
             }
         }
         return results;
