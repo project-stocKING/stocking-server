@@ -31,7 +31,7 @@ public class RequestListener
         try
         {
             server = new ServerSocket(portNumber);
-            System.out.println("Server socket created");
+            System.out.println("Server socket created on port " + portNumber);
         }
         catch (IOException ex)
         {
@@ -44,7 +44,7 @@ public class RequestListener
             try
             {
                 client = server.accept();
-                System.out.println("Client accepted");
+                System.out.println("Client connected");
 
                 new RequestParser(client).start();
 
