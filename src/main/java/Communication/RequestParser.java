@@ -1,9 +1,8 @@
 package Communication;
 
 import Database.EndOfDayDatabaseConnection;
-import Models.StockCompany;
+import Models.IndexInformation;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.util.JSONParseException;
 
 import java.io.*;
 import java.net.Socket;
@@ -77,16 +76,17 @@ public class RequestParser extends Thread
                 else
                 {
                     request.add(line);
+                    System.out.println(line);
                 }
             }
             catch (IOException e)
             {
-                e.printStackTrace();
+                //e.printStackTrace();
                 return;
             }
             catch (Exception ex)
             {
-                ex.printStackTrace();
+                //ex.printStackTrace();
                 return;
             }
         }
@@ -107,7 +107,7 @@ public class RequestParser extends Thread
     private String acquireJsonResponse(String toAcquire)
     {
 
-        String returnValue = "notCompanies";
+        String returnValue = "";
         if(toAcquire.equals("companies"))
         {
             try
@@ -117,8 +117,52 @@ public class RequestParser extends Thread
             }
             catch(Exception ex)
             {
-                ex.pr   intStackTrace();
+                ex.printStackTrace();
             }
+        }
+
+        //TODO: change when there will be indexes database
+        else if(toAcquire.equals("indexes"))
+        {
+            ArrayList<IndexInformation> indexes = new ArrayList<IndexInformation>();
+
+            IndexInformation IEMA = new IndexInformation("IEMA");
+            IEMA.addParameter("length");
+            indexes.add(IEMA);
+
+            System.out.println(IEMA.toString());
+
+            IndexInformation ISMA = new IndexInformation("ISMA");
+            ISMA.addParameter("length");
+            indexes.add(ISMA);
+
+            IndexInformation ISMMA = new IndexInformation("ISMMA");
+            ISMMA.addParameter("length");
+            indexes.add(ISMMA);
+
+            IndexInformation IWMA = new IndexInformation("IWMA");
+            IWMA.addParameter("length");
+            indexes.add(IWMA);
+
+            IndexInformation MACD = new IndexInformation("MACD");
+            MACD.addParameter("longLength");
+            MACD.addParameter("shortLength");
+            MACD.addParameter("signalLength");
+            indexes.add(MACD);
+
+            try {
+                returnValue = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(indexes);
+            }
+            catch(Exception ex)
+            {
+                ex.printStackTrace();
+            }
+            //IEMA, ISMA, ISMMA, IWMA - length,
+            //MACD - int fastLength, int slowLength, int signalLength,
+        }
+        else
+        {
+            returnValue = "Error";
         }
         return returnValue;
     }

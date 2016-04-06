@@ -81,12 +81,12 @@ public class StockCompany {
     public String toString() {
         return
                 "Name='" + name + '\'' +
-                ", date=" + date +
-                ", startValue=" + startValue +
-                ", maxValue=" + maxValue +
-                ", minValue=" + minValue +
-                ", endValue=" + endValue +
-                ", volume=" + volume;
+                        ", date=" + date +
+                        ", startValue=" + startValue +
+                        ", maxValue=" + maxValue +
+                        ", minValue=" + minValue +
+                        ", endValue=" + endValue +
+                        ", volume=" + volume;
     }
 
     public double getVolume() {
