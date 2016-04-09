@@ -1,7 +1,9 @@
 package Indexes;
 
 
+import java.util.ArrayList;
+
 public interface IStockIndex
 {
-    public double calculate();
+    public ArrayList<Result> calculate();
 }
