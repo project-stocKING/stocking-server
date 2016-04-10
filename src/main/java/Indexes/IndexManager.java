@@ -32,12 +32,12 @@ public class IndexManager {
         this.indexes = new HashMap<String, IStockIndex>();
         this.endOfDayDatabaseConnection = new EndOfDayDatabaseConnection();
         try {
-            this.stockCompanyArrayList = endOfDayDatabaseConnection.findByDate(indexInformation.getStartDate(), indexInformation.getEndDate(), indexInformation.getStockName());
+            this.stockCompanyArrayList = endOfDayDatabaseConnection.findByDate(indexInformation.getParameters().get("StartDate"), indexInformation.getParameters().get("endDate"), indexInformation.getStockName());
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        indexes.put("ISMA", new ISMA(Integer.parseInt(indexInformation.getParameters().get(0)),stockCompanyArrayList ));
+        indexes.put("ISMA", new ISMA(Integer.parseInt(indexInformation.getParameters().get("period")),stockCompanyArrayList ));
     }
 
     public String calculateIndex() {

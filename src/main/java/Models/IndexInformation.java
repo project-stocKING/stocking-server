@@ -10,24 +10,18 @@ import java.util.Map;
 public class IndexInformation {
     private String indexName;
     private String stockName;
-    private String startDate;
-    private String endDate;
     private Map<String, String> parameters;
 
     public IndexInformation(){
         indexName = "";
         stockName = "";
-        startDate = "";
-        endDate = "";
         parameters = new HashMap<String, String>();
     }
 
-    public IndexInformation(String indexName, String stockName,String startDate, String endDate)
+    public IndexInformation(String indexName, String stockName)
     {
         this.indexName = indexName;
         this.stockName = stockName;
-        this.startDate = startDate;
-        this.endDate = endDate;
         parameters = new HashMap<String, String>();
     }
 
@@ -43,26 +37,12 @@ public class IndexInformation {
         this.stockName = name;
     }
 
-    public void setStartDate(String startDate){
-        this.startDate = startDate;
-    }
-
-    public void setEndDate(String nameEndDate){ this.stockName = endDate; }
-
     public String getIndexName(){
         return indexName;
     }
 
     public String getStockName(){
         return stockName;
-    }
-
-    public String getStartDate(){
-        return startDate;
-    }
-
-    public String getEndDate(){
-        return endDate;
     }
 
     public Map<String, String> getParameters(){
