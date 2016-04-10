@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by Beata on 2016-04-02.
@@ -62,6 +63,8 @@ public class EndOfDayDatabaseConnection {
     }
 
     public ArrayList<StockCompany> findByDate(String start, String end, String name) throws ParseException {
+
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         Date startDate = new SimpleDateFormat("yyyyMMdd", (Locale.ENGLISH)).parse(start); /// data w formacie bazy np 20140913
         Date endDate = new SimpleDateFormat("yyyyMMdd", (Locale.ENGLISH)).parse(end);
         BasicDBObject query = new BasicDBObject();

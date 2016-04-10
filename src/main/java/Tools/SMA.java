@@ -25,7 +25,7 @@ public class SMA {
 
         sma.add(sum/N);
 
-        for (int i= 1; i < length; i++)
+        for (int i= 1; i < length-1; i++)
             sma.add(sma.get(i-1) + c_price.get(i+N)/N - c_price.get(i)/N);
         return sma;
     }

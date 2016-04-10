@@ -1,5 +1,6 @@
 package Indexes;
 
+import Models.StockCompany;
 import Tools.EMA;
 
 import java.awt.geom.Line2D;
@@ -10,15 +11,19 @@ public class MACD extends Index implements IStockIndex
 {
     private int fastLength, slowLength,signalLength;
     private ArrayList<Double> c_price= new ArrayList<Double>();
+    private ArrayList<StockCompany> list= new ArrayList<StockCompany>();
     private ArrayList<Double> macd= new ArrayList<Double>(c_price.size()-slowLength+1);
     private ArrayList<Double> signal= new ArrayList<Double>(macd.size()-signalLength);
 
-    public MACD(int fastLength, int slowLength, int signalLength, ArrayList<Double> c_price) {
+    public MACD(int fastLength, int slowLength, int signalLength, ArrayList<StockCompany> list) {
         super("MACD");
         this.fastLength = fastLength;
         this.slowLength = slowLength;
         this.signalLength=signalLength;
-        this.c_price = new ArrayList<Double>(c_price);
+        for(int i=0;i<list.size();i++)
+        {
+            this.c_price.add(list.get(i).getEndValue());
+        }
     }
 
     public ArrayList<Result> calculate() {
@@ -46,12 +51,16 @@ public class MACD extends Index implements IStockIndex
             {
                 diff = macd.get(i) - signal.get(i);
                 diffprev= macd.get(i-1) - signal.get(i-1);
-                if(diffprev>0 && diff<0)
-                    result=true; //sell
-                else if (diffprev<0 && diff>0)
-                    result=false; //buy
-                results.add(new Result(signalLength-(i-1),result,this.getName()));
-                //day (signalLength=actual day, so diff between them will be number of day from present) ,signal status, name
+
+                if(diffprev>0 && diff<0) {
+                    result = true; //sell
+                    results.add(new Result(list.get(i).getDate(), result, this.getName()));
+                }
+                else if (diffprev<0 && diff>0) {
+                    result = false; //buy
+                    results.add(new Result(list.get(i).getDate(),result,this.getName()));
+                }
+                //date ,signal status, name
             }
         }
         return results;
