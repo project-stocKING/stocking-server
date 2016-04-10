@@ -172,7 +172,7 @@ public class RequestParser extends Thread
         //TODO: change when there will be indexes database
         else if(toAcquire.equals("indexes"))
         {
-            if(httpMethod.equals("get")) {
+           /* if(httpMethod.equals("get")) {
                 ArrayList<IndexInformation> indexes = new ArrayList<IndexInformation>();
 
                 IndexInformation IEMA = new IndexInformation("IEMA");
@@ -208,7 +208,7 @@ public class RequestParser extends Thread
             else if(httpMethod.equals("post"))
             {
                 //TODO: send received JSON body to index manager
-            }
+            }*/
 
         }
         else
