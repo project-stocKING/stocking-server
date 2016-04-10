@@ -2,6 +2,7 @@ package Communication;
 
 import Database.EndOfDayDatabaseConnection;
 import Indexes.Index;
+import Indexes.IndexManager;
 import Models.IndexInformation;
 import Models.IndexParameters;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -212,21 +213,15 @@ public class RequestParser extends Thread
 
                 returnValue = "Hello World";
 
-                IndexParameters information  = null;
+                IndexInformation information  = null;
+
                 try {
-                    information = objectMapper.readValue(jsonResponse, IndexParameters.class);
+                    information = objectMapper.readValue(jsonResponse, IndexInformation.class);
+                    IndexManager manager = new IndexManager(information);
+                    returnValue = manager.calculateIndex();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                System.out.println(information);
-                try {
-                    returnValue = objectMapper.writeValueAsString(returnValue);
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
-
-                //IndexInformation index = objectMapper.readValue(jsonResponse, IndexInformation.class);
-                //returnValue = objectMapper.writeValueAsString(index);
 
             }
 
