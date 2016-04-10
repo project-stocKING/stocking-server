@@ -1,9 +1,14 @@
 package Communication;
 
 import Database.EndOfDayDatabaseConnection;
+import Indexes.Index;
 import Models.IndexInformation;
+import Models.IndexParameters;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.util.JSON;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.*;
 import java.net.Socket;
@@ -60,6 +65,7 @@ public class RequestParser extends Thread
             out.writeBytes("Access-Control-Allow-Origin: *\r\n");
             out.writeBytes("Content-Type: application/json\r\n"); // The type of data
             out.writeBytes("Connection: keep-alive\r\n");              // Will close stream
+            out.writeBytes("Access-Control-Allow-Methods: GET, POST, PUT\r\n");
             out.writeBytes("\r\n");                               // End of headers
 
         }
@@ -105,19 +111,13 @@ public class RequestParser extends Thread
 
     private void HTTP_GET()
     {
-        jsonResponse = headers.get(0);
-        jsonResponse = jsonResponse.replace("/", "");       //remove /
-
-        String[] lines = jsonResponse.split(" ");
-
-        jsonResponse = lines[1];                            //value
-        jsonResponse = acquireJsonResponse(jsonResponse);
-
+        jsonResponse = acquireJsonResponse(headers.get(0));
     }
 
     private void HTTP_POST() throws IOException
     {
         String line = headers.get(0);
+
         while(!line.isEmpty()){
             headers.add(line);
             line = brinp.readLine();
@@ -134,11 +134,13 @@ public class RequestParser extends Thread
         }
 
         if(contentLength != -1){
-            char[] bodys = new char[contentLength];
-            brinp.read(bodys, 0, contentLength);
+            char[] content = new char[contentLength];
+            brinp.read(content, 0, contentLength);
 
-            jsonResponse = new String(bodys);
-            jsonResponse = JSON.serialize(jsonResponse);
+            jsonResponse = new String(content);
+            // System.out.println(jsonResponse);
+            //jsonResponse = JSON.serialize(jsonResponse);
+            jsonResponse = acquireJsonResponse(headers.get(0));
         }
         else
         {
@@ -148,9 +150,11 @@ public class RequestParser extends Thread
 
     }
 
-
     private String acquireJsonResponse(String toAcquire)
     {
+        toAcquire = toAcquire.replace("/", "");       //remove /
+        String[] lines = toAcquire.split(" ");
+        toAcquire = lines[1];                         //value
 
         String returnValue = "";
         if(toAcquire.equals("companies"))
@@ -172,44 +176,72 @@ public class RequestParser extends Thread
         //TODO: change when there will be indexes database
         else if(toAcquire.equals("indexes"))
         {
-           /* if(httpMethod.equals("get")) {
-                ArrayList<IndexInformation> indexes = new ArrayList<IndexInformation>();
+            if(httpMethod.equals("get")) {
+                ArrayList<IndexParameters> indexes = new ArrayList<IndexParameters>();
 
-                IndexInformation IEMA = new IndexInformation("IEMA");
-                IEMA.addParameter("length");
+                IndexParameters IEMA = new IndexParameters("IEMA");
+                IEMA.addParameter("length", "integer");
                 indexes.add(IEMA);
 
-                System.out.println(IEMA.toString());
-
-                IndexInformation ISMA = new IndexInformation("ISMA");
-                ISMA.addParameter("length");
+                IndexParameters ISMA = new IndexParameters("ISMA");
+                ISMA.addParameter("period", "integer");
                 indexes.add(ISMA);
 
-                IndexInformation ISMMA = new IndexInformation("ISMMA");
-                ISMMA.addParameter("length");
+                IndexParameters ISMMA = new IndexParameters("ISMMA");
+                ISMMA.addParameter("length", "integer");
                 indexes.add(ISMMA);
 
-                IndexInformation IWMA = new IndexInformation("IWMA");
-                IWMA.addParameter("length");
+                IndexParameters IWMA = new IndexParameters("IWMA");
+                IWMA.addParameter("length", "integer");
                 indexes.add(IWMA);
 
-                IndexInformation MACD = new IndexInformation("MACD");
-                MACD.addParameter("longLength");
-                MACD.addParameter("shortLength");
-                MACD.addParameter("signalLength");
+                IndexParameters MACD = new IndexParameters("MACD");
+                MACD.addParameter("longLength", "integer");
+                MACD.addParameter("shortLength", "integer");
+                MACD.addParameter("signalLength", "integer");
                 indexes.add(MACD);
 
                 try {
-                    returnValue = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(indexes);
+                    returnValue = objectMapper.writeValueAsString(indexes);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
             else if(httpMethod.equals("post"))
             {
-                //TODO: send received JSON body to index manager
-            }*/
 
+                returnValue = "Hello World";
+
+                IndexParameters information  = null;
+                try {
+                    information = objectMapper.readValue(jsonResponse, IndexParameters.class);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(information);
+                try {
+                    returnValue = objectMapper.writeValueAsString(returnValue);
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
+
+                //IndexInformation index = objectMapper.readValue(jsonResponse, IndexInformation.class);
+                //returnValue = objectMapper.writeValueAsString(index);
+
+            }
+
+        }
+        else if(toAcquire.equals("ISMA"))
+        {
+            IndexInformation ISMA = new IndexInformation();
+            ISMA.setIndexName("ISMA");
+            ISMA.addParameter("period", "integer");
+
+            try {
+                returnValue = objectMapper.writeValueAsString(ISMA);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
         }
         else
         {

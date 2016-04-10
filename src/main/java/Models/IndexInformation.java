@@ -1,6 +1,8 @@
 package Models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Michał on 2016-04-06.
@@ -10,14 +12,14 @@ public class IndexInformation {
     private String stockName;
     private String startDate;
     private String endDate;
-    private ArrayList<String> parameters;
+    private Map<String, String> parameters;
 
     public IndexInformation(){
         indexName = "";
         stockName = "";
         startDate = "";
         endDate = "";
-        parameters = new ArrayList<String>();
+        parameters = new HashMap<String, String>();
     }
 
     public IndexInformation(String indexName, String stockName,String startDate, String endDate)
@@ -26,11 +28,11 @@ public class IndexInformation {
         this.stockName = stockName;
         this.startDate = startDate;
         this.endDate = endDate;
-        parameters = new ArrayList<String>();
+        parameters = new HashMap<String, String>();
     }
 
-    public void addParameter(String parameter){
-        parameters.add(parameter);
+    public void addParameter(String parameter, String type){
+        parameters.put(parameter, type);
     }
 
     public void setIndexName(String name){
@@ -55,7 +57,6 @@ public class IndexInformation {
         return stockName;
     }
 
-
     public String getStartDate(){
         return startDate;
     }
@@ -64,7 +65,7 @@ public class IndexInformation {
         return endDate;
     }
 
-    public ArrayList<String> getParameters(){
+    public Map<String, String> getParameters(){
         return parameters;
     }
 

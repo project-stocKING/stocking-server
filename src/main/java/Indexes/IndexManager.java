@@ -1,14 +1,13 @@
-package Indexes;
+ package Indexes;
 
-import Database.EndOfDayDatabaseConnection;
-import Models.IndexInformation;
-import Models.StockCompany;
-import org.json.JSONObject;
-
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+ import Database.EndOfDayDatabaseConnection;
+ import Models.IndexInformation;
+ import Models.StockCompany;
+ import org.json.JSONObject;
+ import java.text.ParseException;
+ import java.util.ArrayList;
+ import java.util.HashMap;
+ import java.util.Map;
 
 /**
  * Created by Beata on 2016-04-10.
@@ -60,3 +59,6 @@ public class IndexManager {
         return json;
     }
 }
+
+
+
