@@ -53,6 +53,7 @@ public class IndexInformation {
     public String toString() {
         return
                 "Name='" + indexName + '\'' +
+                        "StockName='" + stockName + '\'' +
                         ", parameters=" + parameters.toString();
 
     }

@@ -5,8 +5,11 @@ import Indexes.Index;
 import Indexes.IndexManager;
 import Models.IndexInformation;
 import Models.IndexParameters;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.mongodb.util.JSON;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -211,25 +214,21 @@ public class RequestParser extends Thread
             else if(httpMethod.equals("post"))
             {
 
-                returnValue = "Hello World";
-
-                IndexInformation information  = null;
-
-                try {
-                    information = objectMapper.readValue(jsonResponse, IndexInformation.class);
-                    IndexManager manager = new IndexManager(information);
-                    returnValue = manager.calculateIndex();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                //returnValue = "Hello World";
+                System.out.println(jsonResponse);
+                IndexInformation indexInformation = new IndexInformation("ISMA", "KGHM");
+                indexInformation.addParameter("startDate", "20151102");
+                indexInformation.addParameter("endDate", "20160402");
+                indexInformation.addParameter("period", "10");
+                IndexManager indexManager = new IndexManager(indexInformation);
+                returnValue = indexManager.calculateIndex();
 
             }
 
         }
         else if(toAcquire.equals("ISMA"))
         {
-            IndexInformation ISMA = new IndexInformation();
-            ISMA.setIndexName("ISMA");
+            IndexParameters ISMA = new IndexParameters("ISMA");
             ISMA.addParameter("period", "integer");
 
             try {
