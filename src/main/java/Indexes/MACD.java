@@ -2,6 +2,7 @@ package Indexes;
 
 import Models.StockCompany;
 import Tools.EMA;
+import Tools.Signal;
 
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
@@ -26,12 +27,13 @@ public class MACD extends Index implements IStockIndex
         }
     }
 
-    public ArrayList<Result> calculate() {
+    public ArrayList<IndexResult> calculate() {
         ArrayList<Double> fastEMA = new EMA(fastLength, c_price).calculate();
         ArrayList<Double> slowEMA = new EMA(slowLength, c_price).calculate();
-        ArrayList<Result> results=new ArrayList<Result>();
+        ArrayList<IndexResult> results=new ArrayList<IndexResult>();
         double avg=0,diff,diffprev, alpha=2/(signalLength+1);
-        boolean result=false, intersect;
+        Signal result;
+        boolean intersect;
 
         for(int i=0; i< slowEMA.size();i++)
             macd.add(fastEMA.get(slowLength-fastLength+1)-slowEMA.get(0));
@@ -53,12 +55,12 @@ public class MACD extends Index implements IStockIndex
                 diffprev= macd.get(i-1) - signal.get(i-1);
 
                 if(diffprev>0 && diff<0) {
-                    result = true; //sell
-                    results.add(new Result(list.get(i).getDate(), result, this.getName()));
+                    result = Signal.sell; //sell
+                    results.add(new IndexResult(this.getName(), result,list.get(i).getDate()));
                 }
                 else if (diffprev<0 && diff>0) {
-                    result = false; //buy
-                    results.add(new Result(list.get(i).getDate(),result,this.getName()));
+                    result = Signal.buy; //buy
+                    results.add(new IndexResult(this.getName(), result,list.get(i).getDate()));
                 }
                 //date ,signal status, name
             }

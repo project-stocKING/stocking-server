@@ -13,7 +13,7 @@ import java.io.Serializable;
 @JsonSerialize(using = SignalSerializer.class)
 public enum Signal implements Serializable{
 
-    buy("buy"), sell("sell"), nothing("nothing");
+    buy("buy"), sell("sell");
 
     private String name;
 

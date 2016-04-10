@@ -1,5 +1,6 @@
 package Indexes;
 import Models.StockCompany;
+import Tools.Signal;
 import Tools.WMA;
 
 import java.awt.geom.Line2D;
@@ -23,13 +24,12 @@ public class IWMA extends Index implements IStockIndex{
         }
     }
 
-    public ArrayList<Result> calculate()
+    public ArrayList<IndexResult> calculate()
     {
         ArrayList<Double> WMA = new WMA(period, c_price).calculate();
-
-        ArrayList<Result> results=new ArrayList<Result>();
+        ArrayList<IndexResult> results=new ArrayList<IndexResult>();
         double diff,diffprev;
-        boolean result; //signal status true- sell, false- buy
+        Signal result;
 
 
         //checking intersect between wma and c_price
@@ -41,12 +41,12 @@ public class IWMA extends Index implements IStockIndex{
                 diff = c_price.get(i) - WMA.get(i);
                 diffprev=c_price.get(i-1) - WMA.get(i-1);
                 if(diffprev>0 && diff<0) {
-                    result = true; //sell
-                    results.add(new Result(list.get(i).getDate(), result, this.getName()));
+                    result = Signal.sell; //sell
+                    results.add(new IndexResult(this.getName(), result,list.get(i).getDate()));
                 }
                 else if (diffprev<0 && diff>0) {
-                    result = false; //buy
-                    results.add(new Result(list.get(i).getDate(),result,this.getName()));
+                    result = Signal.buy; //buy
+                    results.add(new IndexResult(this.getName(), result,list.get(i).getDate()));
                 }
                 //date ,signal status, name
             }

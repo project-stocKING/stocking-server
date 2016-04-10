@@ -5,5 +5,5 @@ import java.util.ArrayList;
 
 public interface IStockIndex
 {
-    ArrayList<Result> calculate();
+    ArrayList<IndexResult> calculate();
 }
