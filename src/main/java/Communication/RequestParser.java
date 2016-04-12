@@ -216,12 +216,29 @@ public class RequestParser extends Thread
 
                 //returnValue = "Hello World";
                 System.out.println(jsonResponse);
-                IndexInformation indexInformation = new IndexInformation("ISMA", "KGHM");
+
+
+                try {
+                    IndexInformation indexInformation = objectMapper.readValue(jsonResponse, IndexInformation.class);
+                    System.out.println(indexInformation);
+
+                    IndexManager indexManager = new IndexManager(indexInformation);
+                    returnValue = indexManager.calculateIndex();
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                }
+                //  returnValue = indexManager.calculateIndex();
+
+
+                /*IndexInformation indexInformation = new IndexInformation("ISMA", "KGHM");
                 indexInformation.addParameter("startDate", "20151102");
                 indexInformation.addParameter("endDate", "20160402");
                 indexInformation.addParameter("period", "10");
                 IndexManager indexManager = new IndexManager(indexInformation);
-                returnValue = indexManager.calculateIndex();
+                returnValue = indexManager.calculateIndex();*/
 
             }
 
