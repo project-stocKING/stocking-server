@@ -11,7 +11,9 @@ import java.util.ArrayList;
 public class ISMA extends Index implements IStockIndex{
 
     private int period;
-    private ArrayList<Double> c_price= new ArrayList<Double>();
+    private ArrayList<Double> close_price = new ArrayList<Double>();
+    private ArrayList<Double> open_price= new ArrayList<Double>();
+
     private ArrayList<StockCompany> list= new ArrayList<StockCompany>();
 
     public ISMA(int period, ArrayList<StockCompany> list)
@@ -21,35 +23,39 @@ public class ISMA extends Index implements IStockIndex{
         this.list = new ArrayList<StockCompany>(list);
         for(int i=0;i<list.size();i++)
         {
-            this.c_price.add(list.get(i).getEndValue());
+            this.close_price.add(list.get(i).getEndValue());
+            this.open_price.add(list.get(i).getEndValue());
         }
     }
 
     public ArrayList<IndexResult> calculate()
     {
-        ArrayList<Double> SMA = new SMA(period, c_price).calculate();
+        ArrayList<Double> SMA = new SMA(period, close_price).calculate();
         ArrayList<IndexResult> results=new ArrayList<IndexResult>();
-        double diff,diffprev;
+        double diff,diffprev,openprice;
         Signal result;
 
-        //checking intersect between sma and c_price
+        //checking intersect between sma and close_price
         boolean intersect;
         for (int i=SMA.size()-1;i>0;i--) {
             intersect= Line2D.linesIntersect(i-1,SMA.get(i-1),i,SMA.get(i),i-1,SMA.get(i-1),i,SMA.get(i));
             if(intersect)
             {
-                diff = c_price.get(i) - SMA.get(i);
-                diffprev=c_price.get(i-1) - SMA.get(i-1);
+                diff = close_price.get(i) - SMA.get(i);
+                diffprev= close_price.get(i-1) - SMA.get(i-1);
+
+                if(i==SMA.size()-1) openprice=0; //when signal appear in last day we can't take open price from future ;d
+                else openprice=open_price.get(i);
 
                 if(diffprev>0 && diff<0) {
-                    result = Signal.sell; //sell
-                    results.add(new IndexResult(this.getName(), result,list.get(i).getDate()));
+                    result = Signal.sell;
+                    results.add(new IndexResult(this.getName(), result,list.get(i).getDate(),close_price.get(i),openprice));
                 }
                 else if (diffprev<0 && diff>0) {
-                    result = Signal.buy; //buy
-                    results.add(new IndexResult(this.getName(), result,list.get(i).getDate()));
+                    result = Signal.buy;
+                    results.add(new IndexResult(this.getName(), result,list.get(i).getDate(),close_price.get(i),openprice));
                 }
-                //date ,signal status, name
+                //date ,signal status, name, close price, open price of next day
             }
         }
         return results;

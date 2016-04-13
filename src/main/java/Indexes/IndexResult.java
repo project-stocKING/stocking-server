@@ -13,11 +13,16 @@ public class IndexResult implements Serializable {
     private String indexName;
     private Signal result;
     private Date date;
+    private double endValue;
+    private double nextDayOpenValue;
 
-    public IndexResult(String indexName, Signal result, Date date) {
+
+    public IndexResult(String indexName, Signal result, Date date, double endValue, double nextDayOpenValue) {
         this.indexName = indexName;
         this.result = result;
         this.date = date;
+        this.endValue=endValue;
+        this.nextDayOpenValue=nextDayOpenValue;
     }
 
     public String getIndexName() {
@@ -30,5 +35,13 @@ public class IndexResult implements Serializable {
 
     public Date getDate() {
         return date;
+    }
+
+    public double getEndValue() {
+        return endValue;
+    }
+
+    public double getNextDayOpenValue() {
+        return nextDayOpenValue;
     }
 }

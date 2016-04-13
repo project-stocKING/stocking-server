@@ -11,9 +11,10 @@ import java.util.ArrayList;
 public class MACD extends Index implements IStockIndex
 {
     private int fastLength, slowLength,signalLength;
-    private ArrayList<Double> c_price= new ArrayList<Double>();
+    private ArrayList<Double> close_price= new ArrayList<Double>();
+    private ArrayList<Double> open_price= new ArrayList<Double>();
     private ArrayList<StockCompany> list= new ArrayList<StockCompany>();
-    private ArrayList<Double> macd= new ArrayList<Double>(c_price.size()-slowLength+1);
+    private ArrayList<Double> macd= new ArrayList<Double>(close_price.size()-slowLength+1);
     private ArrayList<Double> signal= new ArrayList<Double>(macd.size()-signalLength);
 
     public MACD(int fastLength, int slowLength, int signalLength, ArrayList<StockCompany> list) {
@@ -23,15 +24,16 @@ public class MACD extends Index implements IStockIndex
         this.signalLength=signalLength;
         for(int i=0;i<list.size();i++)
         {
-            this.c_price.add(list.get(i).getEndValue());
+            this.close_price.add(list.get(i).getEndValue());
+            this.open_price.add(list.get(i).getEndValue());
         }
     }
 
     public ArrayList<IndexResult> calculate() {
-        ArrayList<Double> fastEMA = new EMA(fastLength, c_price).calculate();
-        ArrayList<Double> slowEMA = new EMA(slowLength, c_price).calculate();
+        ArrayList<Double> fastEMA = new EMA(fastLength, close_price).calculate();
+        ArrayList<Double> slowEMA = new EMA(slowLength, close_price).calculate();
         ArrayList<IndexResult> results=new ArrayList<IndexResult>();
-        double avg=0,diff,diffprev, alpha=2/(signalLength+1);
+        double avg=0,diff,diffprev, alpha=2/(signalLength+1),openprice;
         Signal result;
         boolean intersect;
 
@@ -54,15 +56,18 @@ public class MACD extends Index implements IStockIndex
                 diff = macd.get(i) - signal.get(i);
                 diffprev= macd.get(i-1) - signal.get(i-1);
 
+                if(i==signalLength) openprice=0; //when signal appear in last day we can't take open price from future ;d
+                else openprice=open_price.get(i);
+
                 if(diffprev>0 && diff<0) {
-                    result = Signal.sell; //sell
-                    results.add(new IndexResult(this.getName(), result,list.get(i).getDate()));
+                    result = Signal.sell;
+                    results.add(new IndexResult(this.getName(), result,list.get(i).getDate(),close_price.get(i),openprice));
                 }
                 else if (diffprev<0 && diff>0) {
-                    result = Signal.buy; //buy
-                    results.add(new IndexResult(this.getName(), result,list.get(i).getDate()));
+                    result = Signal.buy;
+                    results.add(new IndexResult(this.getName(), result,list.get(i).getDate(),close_price.get(i),openprice));
                 }
-                //date ,signal status, name
+                //date ,signal status, name, close price, open price of next day
             }
         }
         return results;
