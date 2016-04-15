@@ -5,6 +5,7 @@ import Tools.Signal;
 
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
+import java.util.Map;
 
 //Exponential Moving Average as index
 public class IEMA extends Index implements IStockIndex{
@@ -59,6 +60,10 @@ public class IEMA extends Index implements IStockIndex{
             }
         }
         return results;
+    }
+
+    public void initialize(Map<String, Object> parameters) {
+
     }
 
 }

@@ -44,7 +44,12 @@ public class EndOfDayDatabaseConnection {
     }
 
     public ArrayList<StockCompany> getCollection(String name, BasicDBObject query) {
-        mongoCollection = database.getCollection(name);
+
+        try {
+            mongoCollection = database.getCollection(name);
+        } catch (NullPointerException nullPointerException) {
+            nullPointerException.printStackTrace();
+        }
 
         if(query != null)
             fDoc = mongoCollection.find(query);
@@ -58,7 +63,6 @@ public class EndOfDayDatabaseConnection {
             stockCompanyArrayList.add(stockCompany);
 
         }
-        System.out.println("size array " + stockCompanyArrayList.size());
         return stockCompanyArrayList;
     }
 

@@ -5,6 +5,7 @@ import Tools.Signal;
 
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
+import java.util.Map;
 
 //Smoothed Moving Average as index
 public class ISMMA extends Index implements IStockIndex{
@@ -58,6 +59,10 @@ public class ISMMA extends Index implements IStockIndex{
             }
         }
         return results;
+    }
+
+    public void initialize(Map<String, Object> parameters) {
+
     }
 
 }

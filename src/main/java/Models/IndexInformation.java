@@ -1,6 +1,5 @@
 package Models;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,23 +9,23 @@ import java.util.Map;
 public class IndexInformation {
     private String indexName;
     private String stockName;
-    private Map<String, String> parameters;
+    private Map<String, Object> parameters;
 
     public IndexInformation(){
         indexName = "";
         stockName = "";
-        parameters = new HashMap<String, String>();
+        parameters = new HashMap<String, Object>();
     }
 
     public IndexInformation(String indexName, String stockName)
     {
         this.indexName = indexName;
         this.stockName = stockName;
-        parameters = new HashMap<String, String>();
+        parameters = new HashMap<String, Object>();
     }
 
-    public void addParameter(String parameter, String type){
-        parameters.put(parameter, type);
+    public void addParameter(String type, Object parameter ){
+        parameters.put(type ,parameter);
     }
 
     public void setIndexName(String name){
@@ -45,7 +44,7 @@ public class IndexInformation {
         return stockName;
     }
 
-    public Map<String, String> getParameters(){
+    public Map<String, Object> getParameters(){
         return parameters;
     }
 

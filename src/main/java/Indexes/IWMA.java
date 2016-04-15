@@ -5,6 +5,7 @@ import Tools.WMA;
 
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
+import java.util.Map;
 
 //Weighted Moving Average as index
 public class IWMA extends Index implements IStockIndex{
@@ -59,6 +60,10 @@ public class IWMA extends Index implements IStockIndex{
         }
 
         return results;
+    }
+
+    public void initialize(Map<String, Object> parameters) {
+
     }
 
 }

@@ -32,19 +32,21 @@ public class IndexManager {
         this.indexes = new HashMap<String, IStockIndex>();
         this.endOfDayDatabaseConnection = new EndOfDayDatabaseConnection();
         try {
-            this.stockCompanyArrayList = endOfDayDatabaseConnection.findByDate(indexInformation.getParameters().get("StartDate"), indexInformation.getParameters().get("endDate"), indexInformation.getStockName());
-            System.out.println(stockCompanyArrayList);
+            this.stockCompanyArrayList = endOfDayDatabaseConnection.findByDate(indexInformation.getParameters().get("StartDate").toString(), indexInformation.getParameters().get("endDate").toString(), indexInformation.getStockName());
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        indexes.put("ISMA", new ISMA(Integer.parseInt(indexInformation.getParameters().get("period")), stockCompanyArrayList ));
+        indexes.put("ISMA" , new ISMA());
     }
+
 
     public String calculateIndex() {
         String json = null;
 
         IStockIndex index = indexes.get(indexInformation.getIndexName());
+        indexInformation.addParameter("stockList" , stockCompanyArrayList);
+        index.initialize(indexInformation.getParameters());
         indexResultArrayList = index.calculate();
 
         try {
@@ -54,8 +56,6 @@ public class IndexManager {
         {
             ex.printStackTrace();
         }
-
-        System.out.println(json);
 
         return json;
     }

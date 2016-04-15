@@ -5,6 +5,7 @@ import Tools.Signal;
 
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
+import java.util.Map;
 
 
 //Simple Moving Average as index
@@ -16,17 +17,11 @@ public class ISMA extends Index implements IStockIndex{
 
     private ArrayList<StockCompany> list= new ArrayList<StockCompany>();
 
-    public ISMA(int period, ArrayList<StockCompany> list)
+    public ISMA() // pusty konstruktor
     {
         super("SMA");
-        this.period = period;
-        this.list = new ArrayList<StockCompany>(list);
-        for(int i=0;i<list.size();i++)
-        {
-            this.close_price.add(list.get(i).getEndValue());
-            this.open_price.add(list.get(i).getEndValue());
-        }
     }
+
 
     public ArrayList<IndexResult> calculate()
     {
@@ -59,6 +54,18 @@ public class ISMA extends Index implements IStockIndex{
             }
         }
         return results;
+    }
+
+    public void initialize(Map<String, Object> parameters) {
+
+        this.period = Integer.parseInt(parameters.get("period").toString());
+        this.list = (ArrayList<StockCompany>)parameters.get("stockList");
+
+        for(int i=0;i<list.size();i++)
+        {
+            this.close_price.add(list.get(i).getEndValue());
+            this.open_price.add(list.get(i).getStartValue());
+        }
     }
 
 }
