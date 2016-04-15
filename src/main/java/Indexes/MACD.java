@@ -18,16 +18,8 @@ public class MACD extends Index implements IStockIndex
     private ArrayList<Double> macd= new ArrayList<Double>(close_price.size()-slowLength+1);
     private ArrayList<Double> signal= new ArrayList<Double>(macd.size()-signalLength);
 
-    public MACD(int fastLength, int slowLength, int signalLength, ArrayList<StockCompany> list) {
+    public MACD() {
         super("MACD");
-        this.fastLength = fastLength;
-        this.slowLength = slowLength;
-        this.signalLength=signalLength;
-        for(int i=0;i<list.size();i++)
-        {
-            this.close_price.add(list.get(i).getEndValue());
-            this.open_price.add(list.get(i).getEndValue());
-        }
     }
 
     public ArrayList<IndexResult> calculate() {
@@ -38,15 +30,21 @@ public class MACD extends Index implements IStockIndex
         Signal result;
         boolean intersect;
 
+        //calculating macd values
         for(int i=0; i< slowEMA.size();i++)
             macd.add(fastEMA.get(slowLength-fastLength+1)-slowEMA.get(0));
+        //macd=shorterEMA-longerEMA
 
+
+        //first value of signal is sma
         for (int i=0; i<signalLength;i++)
             avg+=macd.get(i);
-        signal.add(avg);
+        signal.add(avg/signalLength);
 
+        //calculating signal values
         for (int i=1; i<signal.size();i++)
             signal.add(macd.get(signalLength+i)*alpha+signal.get(i-1)*(1-alpha));
+        //signal(n)=macd(n)*alpha+signal(n-1)*(1-alpha)
 
 
         //checking intersect
@@ -58,7 +56,7 @@ public class MACD extends Index implements IStockIndex
                 diffprev= macd.get(i-1) - signal.get(i-1);
 
                 if(i==signalLength) openprice=0; //when signal appear in last day we can't take open price from future ;d
-                else openprice=open_price.get(i);
+                else openprice=open_price.get(i+1);
 
                 if(diffprev>0 && diff<0) {
                     result = Signal.sell;
@@ -76,6 +74,17 @@ public class MACD extends Index implements IStockIndex
 
     public void initialize(Map<String, Object> parameters) {
 
+        this.fastLength = Integer.parseInt(parameters.get("fastLength").toString());
+        this.slowLength = Integer.parseInt(parameters.get("slowLength").toString());
+        this.signalLength=Integer.parseInt(parameters.get("signalLength").toString());
+
+        this.list = (ArrayList<StockCompany>)parameters.get("stockList");
+
+        for(int i=0;i<list.size();i++)
+        {
+            this.close_price.add(list.get(i).getEndValue());
+            this.open_price.add(list.get(i).getStartValue());
+        }
     }
 
 

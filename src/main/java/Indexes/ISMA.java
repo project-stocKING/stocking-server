@@ -40,7 +40,7 @@ public class ISMA extends Index implements IStockIndex{
                 diffprev= close_price.get(i-1) - SMA.get(i-1);
 
                 if(i==SMA.size()-1) openprice=0; //when signal appear in last day we can't take open price from future ;d
-                else openprice=open_price.get(i);
+                else openprice=open_price.get(i+1);
 
                 if(diffprev>0 && diff<0) {
                     result = Signal.sell;

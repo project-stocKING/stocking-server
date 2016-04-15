@@ -16,17 +16,10 @@ public class IEMA extends Index implements IStockIndex{
 
     private ArrayList<StockCompany> list= new ArrayList<StockCompany>();
 
-    public IEMA(int period, ArrayList<StockCompany> list)
+    public IEMA()
     {
         super("EMA");
-        this.period = period;
-        this.list = new ArrayList<StockCompany>(list);
-        for(int i=0;i<list.size();i++)
-        {
-            this.close_price.add(list.get(i).getEndValue());
-            this.open_price.add(list.get(i).getEndValue());
 
-        }
     }
 
     public ArrayList<IndexResult> calculate()
@@ -46,7 +39,7 @@ public class IEMA extends Index implements IStockIndex{
                 diffprev= close_price.get(i-1) - EMA.get(i-1);
 
                 if(i==EMA.size()-1) openprice=0; //when signal appear in last day we can't take open price from future ;d
-                else openprice=open_price.get(i);
+                else openprice=open_price.get(i+1);
 
                 if(diffprev>0 && diff<0) {
                     result = Signal.sell;
@@ -64,6 +57,14 @@ public class IEMA extends Index implements IStockIndex{
 
     public void initialize(Map<String, Object> parameters) {
 
+        this.period = Integer.parseInt(parameters.get("period").toString());
+        this.list = (ArrayList<StockCompany>)parameters.get("stockList");
+
+        for(int i=0;i<list.size();i++)
+        {
+            this.close_price.add(list.get(i).getEndValue());
+            this.open_price.add(list.get(i).getStartValue());
+        }
     }
 
 }
