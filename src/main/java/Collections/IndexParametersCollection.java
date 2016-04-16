@@ -1,4 +1,4 @@
-package Tools;
+package Collections;
 
 import Models.IndexParameters;
 
@@ -13,7 +13,7 @@ public class IndexParametersCollection {
 
     private static IndexParametersCollection collection;
 
-    private static Map<String, IndexParameters> indexes = new HashMap<String, IndexParameters>();
+    private static Map<String, IndexParameters> indexes;
 
     private IndexParametersCollection()
     {
@@ -36,6 +36,8 @@ public class IndexParametersCollection {
     //Really long function
     private void initializeIndexes()
     {
+        indexes = new HashMap<String, IndexParameters>();
+
         IndexParameters IEMA = new IndexParameters("IEMA");
         IEMA.addParameter("period", "integer");
         indexes.put("IEMA", IEMA);

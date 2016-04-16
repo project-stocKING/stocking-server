@@ -2,10 +2,9 @@ package Communication.Handlers;
 
 import Database.EndOfDayDatabaseConnection;
 import Models.IndexParameters;
-import Tools.IndexParametersCollection;
+import Collections.IndexParametersCollection;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.util.JSON;
 
 import java.util.Map;
 

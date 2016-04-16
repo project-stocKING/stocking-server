@@ -2,17 +2,10 @@ package Communication;
 
 import Communication.Handlers.HttpGetHandler;
 import Communication.Handlers.HttpPostHandler;
-import Database.EndOfDayDatabaseConnection;
-import Indexes.IndexManager;
-import Models.IndexInformation;
-import Models.IndexParameters;
-import Tools.IndexParametersCollection;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * Created by mike on 26.03.16.
