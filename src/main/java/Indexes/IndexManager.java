@@ -42,6 +42,7 @@ public class IndexManager {
 
 
     public String calculateIndex() {
+
         String json = null;
 
         IStockIndex index = indexes.get(indexInformation.getIndexName());
