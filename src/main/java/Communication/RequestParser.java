@@ -22,11 +22,6 @@ import java.util.ArrayList;
  * Created by mike on 26.03.16.
  */
 
-/*
-        Request Parser will receive a result from calculation
-        and will parse it to JSON and then return it to listener
-        which will send it back to application
- */
 public class RequestParser extends Thread
 {
     private Socket client;
@@ -70,6 +65,7 @@ public class RequestParser extends Thread
             out.writeBytes("Content-Type: application/json\r\n"); // The type of data
             out.writeBytes("Connection: keep-alive\r\n");              // Will close stream
             out.writeBytes("Access-Control-Allow-Methods: GET, POST, PUT\r\n");
+            out.writeBytes("Access-Control-Allow-Headers: *\r\n");
             out.writeBytes("\r\n");                               // End of headers
 
         }
@@ -230,16 +226,6 @@ public class RequestParser extends Thread
                     e.printStackTrace();
 
                 }
-                //  returnValue = indexManager.calculateIndex();
-
-
-                /*IndexInformation indexInformation = new IndexInformation("ISMA", "KGHM");
-                indexInformation.addParameter("startDate", "20151102");
-                indexInformation.addParameter("endDate", "20160402");
-                indexInformation.addParameter("period", "10");
-                IndexManager indexManager = new IndexManager(indexInformation);
-                returnValue = indexManager.calculateIndex();*/
-
             }
 
         }
