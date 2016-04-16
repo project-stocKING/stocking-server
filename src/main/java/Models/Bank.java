@@ -24,14 +24,14 @@ public class Bank {
 
     public ArrayList<IndexResult> calculateBank(ArrayList<IndexResult> indexResultArrayList){
 
-        DecimalFormat df = new DecimalFormat("#.##");
+
 
 
         if(findFirstBuy(indexResultArrayList)){
             for(int i=indexResultArrayList.size()-1; i>=0; i--) {
 
                 if (indexResultArrayList.get(i).getResult().getName().equals("buy")) {
-                    sharesAmount = (int) Math.floor(indexResultArrayList.get(i).getBudgetAmount() / indexResultArrayList.get(i).getNextDayOpenValue());
+                    sharesAmount = calculateSharesAmount(indexResultArrayList.get(i));
                     sharesCost = sharesAmount * indexResultArrayList.get(i).getNextDayOpenValue();
                     restOfBank = indexResultArrayList.get(i).getBudgetAmount() - sharesCost;
                     indexResultArrayList.get(i).setBudgetAmount(Math.floor(restOfBank*100)/100);
@@ -51,10 +51,10 @@ public class Bank {
             for(int i=indexResultArrayList.size()-2; i>=0; i--){
 
                 if(indexResultArrayList.get(i).getResult().getName().equals("buy")){
-                    sharesAmount = (int) Math.floor(indexResultArrayList.get(i).getBudgetAmount()/indexResultArrayList.get(i).getNextDayOpenValue());
+                    sharesAmount = calculateSharesAmount(indexResultArrayList.get(i));
                     sharesCost = sharesAmount*indexResultArrayList.get(i).getNextDayOpenValue();
                     restOfBank = indexResultArrayList.get(i).getBudgetAmount() - sharesCost;
-                    indexResultArrayList.get(i).setBudgetAmount(restOfBank);
+                    indexResultArrayList.get(i).setBudgetAmount(Math.floor(restOfBank*100)/100);
                     indexResultArrayList.get(i).setSharesAmount(sharesAmount);
 
                 }else{
@@ -67,9 +67,6 @@ public class Bank {
 
             }
         }
-
-
-
 
 
         return indexResultArrayList;
