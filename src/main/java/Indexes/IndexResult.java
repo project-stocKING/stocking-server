@@ -29,5 +29,9 @@ public class IndexResult implements Serializable {
         this.nextDayOpenValue=nextDayOpenValue;
     }
 
+    public String buyOrSell(){
+        return result.getName();
+    }
+
 
 }
