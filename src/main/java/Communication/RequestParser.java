@@ -1,6 +1,7 @@
 package Communication;
 
 import Communication.Handlers.HttpGetHandler;
+import Communication.Handlers.HttpPostHandler;
 import Database.EndOfDayDatabaseConnection;
 import Indexes.IndexManager;
 import Models.IndexInformation;
@@ -22,13 +23,13 @@ public class RequestParser extends Thread
     private Socket client;
 
     private HttpGetHandler getHandler;  //For getting answer for HTTP GET requests
+    private HttpPostHandler postHandler;
 
     private String headerValue;
 
     private ObjectMapper objectMapper;  //Mapping the object to JSON
     private String jsonResponse;
 
-    private String httpMethod;
     private ArrayList<String> headers;
 
     private InputStream inp = null;
@@ -51,7 +52,9 @@ public class RequestParser extends Thread
         objectMapper = new ObjectMapper();
         jsonResponse = null;
         headers = new ArrayList<String>();
+
         getHandler = new HttpGetHandler();
+        postHandler = new HttpPostHandler();
 
         try
         {
@@ -84,7 +87,7 @@ public class RequestParser extends Thread
         try
         {
             getOrPost();
-            out.writeBytes(jsonResponse + "\r\n");
+            out.writeBytes(jsonResponse);
             client.close();
         }
         catch (IOException ex)
@@ -96,9 +99,12 @@ public class RequestParser extends Thread
 
     private void getOrPost() throws IOException
     {
-        String line  = brinp.readLine();
-        headers.add(line);
+        readHeaders();
         getHeaderValue();
+        System.out.println(headerValue);
+
+        String line = headers.get(0);
+        System.out.println(line);
 
         if(line.contains("GET"))
         {
@@ -106,8 +112,8 @@ public class RequestParser extends Thread
         }
         else if(line.contains("POST"))
         {
-            httpMethod = "post";
-            HTTP_POST();
+            String requestBody = readPostBody();
+            jsonResponse = postHandler.generateResponse(headerValue, requestBody);
         }
     }
 
@@ -119,15 +125,21 @@ public class RequestParser extends Thread
         headerValue = lines[1];
     }
 
-    private void HTTP_POST() throws IOException
+    private void readHeaders() throws IOException
     {
-        String line = headers.get(0);
 
-        while(!line.isEmpty()){
+        String line = brinp.readLine();
+
+        while(!line.isEmpty())
+        {
             headers.add(line);
             line = brinp.readLine();
         }
+    }
 
+    private String readPostBody() throws IOException
+    {
+        String body = null;
         int contentLength = -1;
 
         for(String header : headers){
@@ -142,89 +154,11 @@ public class RequestParser extends Thread
             char[] content = new char[contentLength];
             brinp.read(content, 0, contentLength);
 
-            jsonResponse = new String(content);
-            jsonResponse = acquireJsonResponse(headers.get(0));
-        }
-        else
-        {
-            jsonResponse = "error";
-            return;
+            body = new String(content);
+
         }
 
+        return body;
     }
-
-    private String acquireJsonResponse(String toAcquire)
-    {
-
-        String returnValue = "";
-        if(headerValue.equals("companies"))
-        {
-            if(httpMethod.equals("get"))
-            {
-                try
-                {
-                    EndOfDayDatabaseConnection dbCon = new EndOfDayDatabaseConnection();
-                    returnValue = dbCon.companies();
-                }
-                catch (Exception ex)
-                {
-                    ex.printStackTrace();
-                }
-            }
-        }
-
-        else if(headerValue.equals("indexes"))
-        {
-            if(httpMethod.equals("get")) {
-
-                Map<String, IndexParameters> indexes = IndexParametersCollection.getIndexes();
-
-                try {
-                    returnValue = objectMapper.writeValueAsString(indexes);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-            else if(httpMethod.equals("post"))
-            {
-
-                //returnValue = "Hello World";
-                System.out.println(jsonResponse);
-
-
-                try {
-                    IndexInformation indexInformation = objectMapper.readValue(jsonResponse, IndexInformation.class);
-                    System.out.println(indexInformation);
-
-                    IndexManager indexManager = new IndexManager(indexInformation);
-                    returnValue = indexManager.calculateIndex();
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-
-                }
-            }
-
-        }
-        else if(toAcquire.equals("ISMA"))
-        {
-            IndexParameters ISMA = new IndexParameters("ISMA");
-            ISMA.addParameter("period", "integer");
-
-            try {
-                returnValue = objectMapper.writeValueAsString(ISMA);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-        }
-        else
-        {
-            returnValue = "Error";
-        }
-
-        return returnValue;
-    }
-
 
 }
