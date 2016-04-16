@@ -21,7 +21,6 @@ public class IndexResult implements Serializable {
     private int sharesAmount;
     private double budgetAmount;
 
-
     public IndexResult(String indexName, Signal result, Date date, double endValue, double nextDayOpenValue) {
         this.indexName = indexName;
         this.result = result;

@@ -48,7 +48,7 @@ public class IndexManager {
 
         IStockIndex index = indexes.get(indexInformation.getIndexName());
         indexInformation.addParameter("stockList" , stockCompanyArrayList);
-        index.initialize(indexInformation.getParameters());
+            index.initialize(indexInformation.getParameters());
         indexResultArrayList = index.calculate();
         // test
         Bank bank = new Bank();

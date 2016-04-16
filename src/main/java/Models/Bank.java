@@ -20,28 +20,20 @@ public class Bank {
     int sharesAmount;
     double sharesCost, soldSharesCost;
     double restOfBank;
+    IndexResult currentResult;
 
-
-    public ArrayList<IndexResult> calculateBank(ArrayList<IndexResult> indexResultArrayList){
-
-
-
+    public void calculateBank(ArrayList<IndexResult> indexResultArrayList){
 
         if(findFirstBuy(indexResultArrayList)){
-            for(int i=indexResultArrayList.size()-1; i>=0; i--) {
-
-                if (indexResultArrayList.get(i).getResult().getName().equals("buy")) {
-                    sharesAmount = calculateSharesAmount(indexResultArrayList.get(i));
-                    sharesCost = sharesAmount * indexResultArrayList.get(i).getNextDayOpenValue();
-                    restOfBank = indexResultArrayList.get(i).getBudgetAmount() - sharesCost;
-                    indexResultArrayList.get(i).setBudgetAmount(Math.floor(restOfBank*100)/100);
-                    indexResultArrayList.get(i).setSharesAmount(sharesAmount);
+            for(int i = indexResultArrayList.size() - 1; i >= 0; i--) {
+                currentResult = indexResultArrayList.get(i);
+                if (currentResult.getResult().getName().equals("buy")) {
+                    buySignalAction(currentResult);
 
                 } else {
 
-                    soldSharesCost = sharesAmount * indexResultArrayList.get(i).getNextDayOpenValue();
-                    indexResultArrayList.get(i).setBudgetAmount(Math.floor((soldSharesCost + restOfBank)*100)/100);
-                    indexResultArrayList.get(i).setSharesAmount(0);
+                    sellSignalAction(currentResult);
+
 
                 }
 
@@ -49,30 +41,35 @@ public class Bank {
             }
         }else {
             for(int i=indexResultArrayList.size()-2; i>=0; i--){
-
-                if(indexResultArrayList.get(i).getResult().getName().equals("buy")){
-                    sharesAmount = calculateSharesAmount(indexResultArrayList.get(i));
-                    sharesCost = sharesAmount*indexResultArrayList.get(i).getNextDayOpenValue();
-                    restOfBank = indexResultArrayList.get(i).getBudgetAmount() - sharesCost;
-                    indexResultArrayList.get(i).setBudgetAmount(Math.floor(restOfBank*100)/100);
-                    indexResultArrayList.get(i).setSharesAmount(sharesAmount);
+                currentResult = indexResultArrayList.get(i);
+                if(currentResult.getResult().getName().equals("buy")){
+                   buySignalAction(currentResult);
 
                 }else{
+                    sellSignalAction(currentResult);
 
-                    soldSharesCost = sharesAmount*indexResultArrayList.get(i).getNextDayOpenValue();
-                    indexResultArrayList.get(i).setBudgetAmount(Math.floor((soldSharesCost + restOfBank)*100)/100);
-                    indexResultArrayList.get(i).setSharesAmount(0);
             }
 
 
             }
         }
-
-
-        return indexResultArrayList;
     }
 
+    private void buySignalAction(IndexResult currentResult)
+    {
+        sharesAmount = calculateSharesAmount(currentResult);
+        sharesCost = sharesAmount*currentResult.getNextDayOpenValue();
+        restOfBank = currentResult.getBudgetAmount() - sharesCost;
+        currentResult.setBudgetAmount(Math.floor(restOfBank*100)/100);
+        currentResult.setSharesAmount(sharesAmount);
+    }
 
+    private void sellSignalAction(IndexResult currentResult)
+    {
+        soldSharesCost = sharesAmount*currentResult.getNextDayOpenValue();
+        currentResult.setBudgetAmount(Math.floor((soldSharesCost + restOfBank)*100)/100);
+        currentResult.setSharesAmount(0);
+    }
 
     public int calculateSharesAmount(IndexResult indexResult){
 
@@ -90,7 +87,6 @@ public class Bank {
             return true;
         }
         else return false;
-
     }
 
 }

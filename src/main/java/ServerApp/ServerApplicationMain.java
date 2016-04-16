@@ -2,11 +2,14 @@ package ServerApp;
 
 import Communication.RequestListener;
 import Indexes.IndexManager;
+import Indexes.IndexResult;
 import Models.Bank;
 import Models.IndexInformation;
+import Tools.Signal;
 
 import java.net.UnknownHostException;
 import java.text.ParseException;
+import java.util.Date;
 
 
 /**
@@ -23,7 +26,11 @@ public class ServerApplicationMain {
         indexInformation.addParameter("period", "20");
         IndexManager indexManager = new IndexManager(indexInformation);
         String json = indexManager.calculateIndex();
-
-
     }
+
+    public static void changeResult(IndexResult indexResult)
+    {
+        indexResult.setIndexName("GÓWNO!!");
+    }
+
 }
