@@ -1,6 +1,7 @@
  package Indexes;
 
  import Database.EndOfDayDatabaseConnection;
+ import Models.Bank;
  import Models.IndexInformation;
  import Models.StockCompany;
  import org.json.JSONObject;
@@ -49,6 +50,15 @@ public class IndexManager {
         indexInformation.addParameter("stockList" , stockCompanyArrayList);
         index.initialize(indexInformation.getParameters());
         indexResultArrayList = index.calculate();
+        // test
+        Bank bank = new Bank();
+        for (IndexResult indexResult: indexResultArrayList){
+            indexResult.setBudgetAmount(1000);
+        }
+        bank.calculateBank(indexResultArrayList);
+        for (IndexResult indexResult: indexResultArrayList){
+            System.out.println(indexResult);
+        }
 
         try {
             json = JSONObject.valueToString(indexResultArrayList);

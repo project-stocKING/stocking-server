@@ -18,7 +18,8 @@ public class IndexResult implements Serializable {
     private Date date;
     private double endValue;
     private double nextDayOpenValue;
-    private Bank bank;
+    private int sharesAmount;
+    private double budgetAmount;
 
 
     public IndexResult(String indexName, Signal result, Date date, double endValue, double nextDayOpenValue) {

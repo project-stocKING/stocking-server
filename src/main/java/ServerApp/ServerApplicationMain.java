@@ -18,13 +18,12 @@ public class ServerApplicationMain {
 
       //  RequestListener requestListener = new RequestListener(5001);
         IndexInformation indexInformation = new IndexInformation("ISMA", "KGHM");
-        indexInformation.addParameter("StartDate", "20151102");
-        indexInformation.addParameter("endDate", "20160402");
-        indexInformation.addParameter("period", "10");
+        indexInformation.addParameter("StartDate", "20011102");
+        indexInformation.addParameter("endDate", "20130402");
+        indexInformation.addParameter("period", "20");
         IndexManager indexManager = new IndexManager(indexInformation);
         String json = indexManager.calculateIndex();
-        Bank bank = new Bank(100);
-        bank.calculateBank(json);
+
 
     }
 }
