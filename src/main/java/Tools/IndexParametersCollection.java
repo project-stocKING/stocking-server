@@ -9,7 +9,6 @@ import java.util.Map;
  * Created by mike on 16.04.16.
  */
 
-
 public class IndexParametersCollection {
 
     private static IndexParametersCollection collection;
@@ -38,7 +37,7 @@ public class IndexParametersCollection {
     private void initializeIndexes()
     {
         IndexParameters IEMA = new IndexParameters("IEMA");
-        IEMA.addParameter("length", "integer");
+        IEMA.addParameter("period", "integer");
         indexes.put("IEMA", IEMA);
 
         IndexParameters ISMA = new IndexParameters("ISMA");
@@ -46,11 +45,11 @@ public class IndexParametersCollection {
         indexes.put("ISMA", ISMA);
 
         IndexParameters ISMMA = new IndexParameters("ISMMA");
-        ISMMA.addParameter("length", "integer");
+        ISMMA.addParameter("period", "integer");
         indexes.put("ISMMA", ISMA);
 
         IndexParameters IWMA = new IndexParameters("IWMA");
-        IWMA.addParameter("length", "integer");
+        IWMA.addParameter("period", "integer");
         indexes.put("IWMA", ISMA);
 
         IndexParameters MACD = new IndexParameters("MACD");

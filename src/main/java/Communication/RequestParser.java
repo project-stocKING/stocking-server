@@ -1,20 +1,13 @@
 package Communication;
 
+import Communication.Handlers.HttpGetHandler;
 import Database.EndOfDayDatabaseConnection;
-import Indexes.Index;
 import Indexes.IndexManager;
 import Models.IndexInformation;
 import Models.IndexParameters;
 import Tools.IndexParametersCollection;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.mongodb.util.JSON;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -27,6 +20,10 @@ import java.util.Map;
 public class RequestParser extends Thread
 {
     private Socket client;
+
+    private HttpGetHandler getHandler;  //For getting answer for HTTP GET requests
+
+    private String headerValue;
 
     private ObjectMapper objectMapper;  //Mapping the object to JSON
     private String jsonResponse;
@@ -54,7 +51,7 @@ public class RequestParser extends Thread
         objectMapper = new ObjectMapper();
         jsonResponse = null;
         headers = new ArrayList<String>();
-
+        getHandler = new HttpGetHandler();
 
         try
         {
@@ -62,19 +59,24 @@ public class RequestParser extends Thread
             out = new DataOutputStream(client.getOutputStream());
             brinp = new BufferedReader(new InputStreamReader(inp));
 
-            out.writeBytes("HTTP/1.1 200 \r\n");                  // Version & status code
-            out.writeBytes("Access-Control-Allow-Origin: *\r\n");
-            out.writeBytes("Content-Type: application/json\r\n"); // The type of data
-            out.writeBytes("Connection: keep-alive\r\n");              // Will close stream
-            out.writeBytes("Access-Control-Allow-Methods: GET, POST, PUT\r\n");
-            out.writeBytes("Access-Control-Allow-Headers: *\r\n");
-            out.writeBytes("\r\n");                               // End of headers
+            sendCORSHeaders();
 
         }
         catch (IOException e)
         {
             return;
         }
+    }
+
+    private void sendCORSHeaders() throws IOException
+    {
+        out.writeBytes("HTTP/1.1 200 \r\n");                  // Version & status code
+        out.writeBytes("Access-Control-Allow-Origin: *\r\n");
+        out.writeBytes("Content-Type: application/json\r\n"); // The type of data
+        out.writeBytes("Connection: keep-alive\r\n");              // Will close stream
+        out.writeBytes("Access-Control-Allow-Methods: GET, POST, PUT\r\n");
+        out.writeBytes("Access-Control-Allow-Headers: *\r\n");
+        out.writeBytes("\r\n");                               // End of headers
     }
 
     private void respond()
@@ -96,24 +98,25 @@ public class RequestParser extends Thread
     {
         String line  = brinp.readLine();
         headers.add(line);
+        getHeaderValue();
 
         if(line.contains("GET"))
         {
-            httpMethod = "get";
-            HTTP_GET();
+            jsonResponse = getHandler.generateResponse(headerValue);
         }
         else if(line.contains("POST"))
         {
             httpMethod = "post";
             HTTP_POST();
         }
-
-
     }
 
-    private void HTTP_GET()
+    private void getHeaderValue()
     {
-        jsonResponse = acquireJsonResponse(headers.get(0));
+        String line = headers.get(0);
+        headerValue = line.replace("/", "");       //remove /
+        String[] lines = headerValue.split(" ");
+        headerValue = lines[1];
     }
 
     private void HTTP_POST() throws IOException
@@ -140,8 +143,6 @@ public class RequestParser extends Thread
             brinp.read(content, 0, contentLength);
 
             jsonResponse = new String(content);
-            // System.out.println(jsonResponse);
-            //jsonResponse = JSON.serialize(jsonResponse);
             jsonResponse = acquireJsonResponse(headers.get(0));
         }
         else
@@ -154,12 +155,9 @@ public class RequestParser extends Thread
 
     private String acquireJsonResponse(String toAcquire)
     {
-        toAcquire = toAcquire.replace("/", "");       //remove /
-        String[] lines = toAcquire.split(" ");
-        toAcquire = lines[1];                         //value
 
         String returnValue = "";
-        if(toAcquire.equals("companies"))
+        if(headerValue.equals("companies"))
         {
             if(httpMethod.equals("get"))
             {
@@ -175,7 +173,7 @@ public class RequestParser extends Thread
             }
         }
 
-        else if(toAcquire.equals("indexes"))
+        else if(headerValue.equals("indexes"))
         {
             if(httpMethod.equals("get")) {
 
