@@ -5,6 +5,7 @@ import Indexes.Index;
 import Indexes.IndexManager;
 import Models.IndexInformation;
 import Models.IndexParameters;
+import Tools.IndexParametersCollection;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,6 +18,7 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by mike on 26.03.16.
@@ -173,33 +175,11 @@ public class RequestParser extends Thread
             }
         }
 
-        //TODO: change when there will be indexes database
         else if(toAcquire.equals("indexes"))
         {
             if(httpMethod.equals("get")) {
-                ArrayList<IndexParameters> indexes = new ArrayList<IndexParameters>();
 
-                IndexParameters IEMA = new IndexParameters("IEMA");
-                IEMA.addParameter("length", "integer");
-                indexes.add(IEMA);
-
-                IndexParameters ISMA = new IndexParameters("ISMA");
-                ISMA.addParameter("period", "integer");
-                indexes.add(ISMA);
-
-                IndexParameters ISMMA = new IndexParameters("ISMMA");
-                ISMMA.addParameter("length", "integer");
-                indexes.add(ISMMA);
-
-                IndexParameters IWMA = new IndexParameters("IWMA");
-                IWMA.addParameter("length", "integer");
-                indexes.add(IWMA);
-
-                IndexParameters MACD = new IndexParameters("MACD");
-                MACD.addParameter("longLength", "integer");
-                MACD.addParameter("shortLength", "integer");
-                MACD.addParameter("signalLength", "integer");
-                indexes.add(MACD);
+                Map<String, IndexParameters> indexes = IndexParametersCollection.getIndexes();
 
                 try {
                     returnValue = objectMapper.writeValueAsString(indexes);

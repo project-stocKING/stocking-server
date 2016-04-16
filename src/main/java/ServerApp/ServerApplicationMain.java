@@ -19,18 +19,13 @@ public class ServerApplicationMain {
 
     public static void main( String[] args ) throws ParseException, UnknownHostException {
 
-      //  RequestListener requestListener = new RequestListener(5001);
-        IndexInformation indexInformation = new IndexInformation("ISMA", "KGHM");
+        RequestListener requestListener = new RequestListener(5001);
+       /* IndexInformation indexInformation = new IndexInformation("ISMA", "KGHM");
         indexInformation.addParameter("StartDate", "20011102");
         indexInformation.addParameter("endDate", "20130402");
         indexInformation.addParameter("period", "20");
         IndexManager indexManager = new IndexManager(indexInformation);
-        String json = indexManager.calculateIndex();
-    }
-
-    public static void changeResult(IndexResult indexResult)
-    {
-        indexResult.setIndexName("GÓWNO!!");
+        String json = indexManager.calculateIndex();*/
     }
 
 }
