@@ -2,6 +2,7 @@ package ServerApp;
 
 import Communication.RequestListener;
 import Indexes.IndexManager;
+import Models.Bank;
 import Models.IndexInformation;
 
 import java.net.UnknownHostException;
@@ -22,7 +23,8 @@ public class ServerApplicationMain {
         indexInformation.addParameter("period", "10");
         IndexManager indexManager = new IndexManager(indexInformation);
         String json = indexManager.calculateIndex();
-        System.out.println(json);
+        Bank bank = new Bank(100);
+        bank.calculateBank(json);
 
     }
 }
