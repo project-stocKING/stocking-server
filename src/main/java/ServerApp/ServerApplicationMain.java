@@ -2,10 +2,14 @@ package ServerApp;
 
 import Communication.RequestListener;
 import Indexes.IndexManager;
+import Indexes.IndexResult;
+import Models.Bank;
 import Models.IndexInformation;
+import Tools.Signal;
 
 import java.net.UnknownHostException;
 import java.text.ParseException;
+import java.util.Date;
 
 
 /**
@@ -17,12 +21,16 @@ public class ServerApplicationMain {
 
       //  RequestListener requestListener = new RequestListener(5001);
         IndexInformation indexInformation = new IndexInformation("ISMA", "KGHM");
-        indexInformation.addParameter("StartDate", "20151102");
-        indexInformation.addParameter("endDate", "20160402");
-        indexInformation.addParameter("period", "10");
+        indexInformation.addParameter("StartDate", "20011102");
+        indexInformation.addParameter("endDate", "20130402");
+        indexInformation.addParameter("period", "20");
         IndexManager indexManager = new IndexManager(indexInformation);
         String json = indexManager.calculateIndex();
-        System.out.println(json);
-
     }
+
+    public static void changeResult(IndexResult indexResult)
+    {
+        indexResult.setIndexName("GÓWNO!!");
+    }
+
 }

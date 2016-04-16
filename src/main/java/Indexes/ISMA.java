@@ -9,7 +9,7 @@ import java.util.Map;
 
 
 //Simple Moving Average as index
-public class ISMA extends Index implements IStockIndex{
+public class  ISMA extends Index implements IStockIndex{
 
     private int period;
     private ArrayList<Double> close_price = new ArrayList<Double>();
