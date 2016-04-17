@@ -1,11 +1,17 @@
 package Models;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by Michał on 2016-04-06.
  */
+
+@Getter
+@Setter
 public class IndexInformation {
     private String indexName;
     private String stockName;
@@ -26,22 +32,6 @@ public class IndexInformation {
 
     public void addParameter(String type, Object parameter ){
         parameters.put(type ,parameter);
-    }
-
-    public void setIndexName(String name){
-        this.indexName = name;
-    }
-
-    public void setStockName(String name){
-        this.stockName = name;
-    }
-
-    public String getIndexName(){
-        return indexName;
-    }
-
-    public String getStockName(){
-        return stockName;
     }
 
     public Map<String, Object> getParameters(){

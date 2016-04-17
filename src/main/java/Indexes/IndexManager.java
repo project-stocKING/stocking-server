@@ -1,5 +1,6 @@
  package Indexes;
 
+ import Collections.IndexCollection;
  import Database.EndOfDayDatabaseConnection;
  import Models.Bank;
  import Models.IndexInformation;
@@ -17,7 +18,6 @@ public class IndexManager {
 
     private ArrayList<StockCompany> stockCompanyArrayList;
     private ArrayList<IndexResult> indexResultArrayList;
-    private Map<String, IStockIndex> indexes;
     private IndexInformation indexInformation;
     private EndOfDayDatabaseConnection endOfDayDatabaseConnection;
 
@@ -30,15 +30,12 @@ public class IndexManager {
 
         this.indexInformation = indexInformation;
         this.indexResultArrayList = new ArrayList<IndexResult>();
-        this.indexes = new HashMap<String, IStockIndex>();
         this.endOfDayDatabaseConnection = new EndOfDayDatabaseConnection();
         try {
             this.stockCompanyArrayList = endOfDayDatabaseConnection.findByDate(indexInformation.getParameters().get("StartDate").toString(), indexInformation.getParameters().get("endDate").toString(), indexInformation.getStockName());
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        indexes.put("ISMA" , new ISMA());
     }
 
 
@@ -46,13 +43,18 @@ public class IndexManager {
 
         String json = null;
 
-        IStockIndex index = indexes.get(indexInformation.getIndexName());
+        IStockIndex index = IndexCollection.getIndex(indexInformation.getIndexName());
         indexInformation.addParameter("stockList" , stockCompanyArrayList);
-            index.initialize(indexInformation.getParameters());
+
+        index.initialize(indexInformation.getParameters());
         indexResultArrayList = index.calculate();
-        // test
+
+        double budget = Double.parseDouble(indexInformation.getParameters().get("budget").toString());
+
         Bank bank = new Bank();
+
         indexResultArrayList.get(indexResultArrayList.size()-1).setBudgetAmount(100000);
+
         bank.calculateBank(indexResultArrayList);
         for (IndexResult indexResult : indexResultArrayList){
             System.out.println(indexResult);

@@ -11,7 +11,7 @@ public class SMA {
 
     public SMA(int N, ArrayList<Double> c_price)
     {
-        this.N = N;
+        this.N = N; //period
         length=c_price.size()-N+1;
         this.c_price = new ArrayList<Double>(c_price);
         sma=new ArrayList<Double>(length);
@@ -25,8 +25,8 @@ public class SMA {
 
         sma.add(sum/N);
 
-        for (int i= 1; i < length-1; i++)
-            sma.add(sma.get(i-1) + c_price.get(i+N)/N - c_price.get(i)/N);
+        for (int i= 1; i < length; i++)
+            sma.add(sma.get(i-1) + c_price.get(i-1+N)/N - c_price.get(i-1)/N);
         return sma;
     }
 }

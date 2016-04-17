@@ -37,7 +37,6 @@ public class EndOfDayDatabaseConnection {
         databaseConnection = new DatabaseConnection();
         try {
             database = databaseConnection.connectToDatabase("endOfDay");
-            System.out.println("Success connection!");
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
