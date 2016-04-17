@@ -85,11 +85,11 @@ public class Bank {
 
 
     public boolean findFirstBuy(ArrayList<IndexResult> indexResultArrayList){
-
-        if(indexResultArrayList.get(indexResultArrayList.size()-1).getResult().getName().equals("buy")){
-            return true;
-        }
-        else return false;
+        if(indexResultArrayList.size()>0) {
+            if (indexResultArrayList.get(indexResultArrayList.size() - 1).getResult().getName().equals("buy")) {
+                return true;
+            } else return false;
+        }else return false;
     }
 
 }
