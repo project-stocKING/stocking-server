@@ -53,7 +53,7 @@ public class IndexManager {
 
         Bank bank = new Bank();
 
-        indexResultArrayList.get(indexResultArrayList.size()-1).setBudgetAmount(100000);
+        indexResultArrayList.get(indexResultArrayList.size()-1).setBudgetAmount(budget);
 
         bank.calculateBank(indexResultArrayList);
         for (IndexResult indexResult : indexResultArrayList){

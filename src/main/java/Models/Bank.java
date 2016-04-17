@@ -110,7 +110,6 @@ public class Bank {
         return sharesAmount;
     }
 
-
     public boolean findFirstBuy(ArrayList<IndexResult> indexResultArrayList){
         if(indexResultArrayList.size()>0) {
             if (indexResultArrayList.get(indexResultArrayList.size() - 1).getResult().getName().equals("buy")) {
