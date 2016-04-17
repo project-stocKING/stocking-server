@@ -52,11 +52,9 @@ public class IndexManager {
         indexResultArrayList = index.calculate();
         // test
         Bank bank = new Bank();
-        for (IndexResult indexResult: indexResultArrayList){
-            indexResult.setBudgetAmount(1000);
-        }
+        indexResultArrayList.get(indexResultArrayList.size()-1).setBudgetAmount(100000);
         bank.calculateBank(indexResultArrayList);
-        for (IndexResult indexResult: indexResultArrayList){
+        for (IndexResult indexResult : indexResultArrayList){
             System.out.println(indexResult);
         }
 
