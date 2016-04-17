@@ -52,6 +52,10 @@ public class IEMA extends Index implements IStockIndex{
                 //date ,signal status, name, close price, open price of next day
             }
         }
+
+        close_price.clear();
+        open_price.clear();
+
         return results;
     }
 

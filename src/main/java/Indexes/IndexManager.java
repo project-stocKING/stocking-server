@@ -33,6 +33,9 @@ public class IndexManager {
         this.endOfDayDatabaseConnection = new EndOfDayDatabaseConnection();
         try {
             this.stockCompanyArrayList = endOfDayDatabaseConnection.findByDate(indexInformation.getParameters().get("StartDate").toString(), indexInformation.getParameters().get("endDate").toString(), indexInformation.getStockName());
+            System.out.println(stockCompanyArrayList);
+            System.out.println(stockCompanyArrayList.size());
+
         } catch (ParseException e) {
             e.printStackTrace();
         }

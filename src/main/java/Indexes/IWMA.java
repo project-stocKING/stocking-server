@@ -52,6 +52,9 @@ public class IWMA extends Index implements IStockIndex{
             }
         }
 
+        close_price.clear();
+        open_price.clear();
+
         return results;
     }
 
