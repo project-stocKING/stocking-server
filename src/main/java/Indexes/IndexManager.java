@@ -52,12 +52,11 @@ public class IndexManager {
         double budget = Double.parseDouble(indexInformation.getParameters().get("budget").toString());
 
         Bank bank = new Bank();
-        for (IndexResult indexResult: indexResultArrayList){
-            indexResult.setBudgetAmount(budget);
-        }
+
+        indexResultArrayList.get(indexResultArrayList.size()-1).setBudgetAmount(100000);
 
         bank.calculateBank(indexResultArrayList);
-        for (IndexResult indexResult: indexResultArrayList){
+        for (IndexResult indexResult : indexResultArrayList){
             System.out.println(indexResult);
         }
 
