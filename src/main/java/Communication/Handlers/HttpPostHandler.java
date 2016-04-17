@@ -27,20 +27,19 @@ public class HttpPostHandler
         {
             try
             {
+                System.out.println(requestBody);
                 IndexInformation indexInformation = objectMapper.readValue(requestBody, IndexInformation.class);
-                System.out.println(indexInformation);
-
                 IndexManager indexManager = new IndexManager(indexInformation);
                 response = indexManager.calculateIndex();
             }
             catch (IOException ex)
             {
-                response = null;
+                response = "error";
                 ex.printStackTrace();
             }
             catch (Exception ex)
             {
-                response = null;
+                response = "error";
                 ex.printStackTrace();
             }
         }

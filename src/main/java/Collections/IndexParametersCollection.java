@@ -2,6 +2,7 @@ package Collections;
 
 import Models.IndexParameters;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,21 +14,14 @@ public class IndexParametersCollection {
 
     private static IndexParametersCollection collection;
 
-    private static Map<String, IndexParameters> indexes;
+    private static ArrayList<IndexParameters> indexes;
 
     private IndexParametersCollection()
     {
         initializeIndexes();
     }
 
-    public static IndexParameters getIndexParameter(String indexName)
-    {
-        if(collection == null) collection = new IndexParametersCollection();
-
-        return indexes.get(indexName);
-    }
-
-    public static Map<String, IndexParameters> getIndexes()
+    public static ArrayList<IndexParameters> getIndexes()
     {
         if(collection == null) collection = new IndexParametersCollection();
         return indexes;
@@ -36,29 +30,29 @@ public class IndexParametersCollection {
     //Really long function
     private void initializeIndexes()
     {
-        indexes = new HashMap<String, IndexParameters>();
+        indexes = new ArrayList<IndexParameters>();
 
         IndexParameters IEMA = new IndexParameters("IEMA");
         IEMA.addParameter("period", "integer");
-        indexes.put("IEMA", IEMA);
+        indexes.add(IEMA);
 
         IndexParameters ISMA = new IndexParameters("ISMA");
         ISMA.addParameter("period", "integer");
-        indexes.put("ISMA", ISMA);
+        indexes.add(ISMA);
 
         IndexParameters ISMMA = new IndexParameters("ISMMA");
         ISMMA.addParameter("period", "integer");
-        indexes.put("ISMMA", ISMA);
+        indexes.add(ISMMA);
 
         IndexParameters IWMA = new IndexParameters("IWMA");
         IWMA.addParameter("period", "integer");
-        indexes.put("IWMA", ISMA);
+        indexes.add(IWMA);
 
         IndexParameters MACD = new IndexParameters("MACD");
         MACD.addParameter("longLength", "integer");
         MACD.addParameter("shortLength", "integer");
         MACD.addParameter("signalLength", "integer");
-        indexes.put("MACD", MACD);
+        indexes.add(MACD);
     }
 
 

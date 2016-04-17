@@ -6,6 +6,7 @@ import Collections.IndexParametersCollection;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -36,18 +37,6 @@ public class HttpGetHandler
         }
         else
         {
-            IndexParameters indexParameter = IndexParametersCollection.getIndexParameter(value);
-
-            if(indexParameter != null)
-            {
-                try
-                {
-                    response = objectMapper.writeValueAsString(indexParameter);
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
-            }
-            else
                 response = "Wrong request";
         }
 
@@ -70,7 +59,7 @@ public class HttpGetHandler
 
     private void getIndexes()
     {
-        Map<String, IndexParameters> indexes = IndexParametersCollection.getIndexes();
+        ArrayList<IndexParameters> indexes = IndexParametersCollection.getIndexes();
 
         try {
             response = objectMapper.writeValueAsString(indexes);

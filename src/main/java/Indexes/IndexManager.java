@@ -45,13 +45,17 @@ public class IndexManager {
 
         IStockIndex index = IndexCollection.getIndex(indexInformation.getIndexName());
         indexInformation.addParameter("stockList" , stockCompanyArrayList);
-            index.initialize(indexInformation.getParameters());
+
+        index.initialize(indexInformation.getParameters());
         indexResultArrayList = index.calculate();
-        // test
+
+        double budget = Double.parseDouble(indexInformation.getParameters().get("budget").toString());
+
         Bank bank = new Bank();
         for (IndexResult indexResult: indexResultArrayList){
-            indexResult.setBudgetAmount(1000);
+            indexResult.setBudgetAmount(budget);
         }
+
         bank.calculateBank(indexResultArrayList);
         for (IndexResult indexResult: indexResultArrayList){
             System.out.println(indexResult);

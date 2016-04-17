@@ -43,7 +43,7 @@ public class RequestParser extends Thread
     private void initiateComponents()
     {
         objectMapper = new ObjectMapper();
-        jsonResponse = null;
+        jsonResponse = "";
         headers = new ArrayList<String>();
 
         getHandler = new HttpGetHandler();
@@ -90,14 +90,22 @@ public class RequestParser extends Thread
 
     }
 
+    private void readHeaders() throws IOException
+    {
+        String line = brinp.readLine();
+
+        while(!line.isEmpty())
+        {
+            headers.add(line);
+            line = brinp.readLine();
+        }
+    }
+
     private void getOrPost() throws IOException
     {
         readHeaders();
         getHeaderValue();
-        System.out.println(headerValue);
-
         String line = headers.get(0);
-        System.out.println(line);
 
         if(line.contains("GET"))
         {
@@ -118,17 +126,7 @@ public class RequestParser extends Thread
         headerValue = lines[1];
     }
 
-    private void readHeaders() throws IOException
-    {
 
-        String line = brinp.readLine();
-
-        while(!line.isEmpty())
-        {
-            headers.add(line);
-            line = brinp.readLine();
-        }
-    }
 
     private String readPostBody() throws IOException
     {
