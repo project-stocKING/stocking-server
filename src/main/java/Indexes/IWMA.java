@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 //Weighted Moving Average as index
-public class IWMA extends Index implements IStockIndex{
+public class IWMA extends Indicator implements IStockIndicator {
 
     private int period;
     private ArrayList<Double> close_price = new ArrayList<Double>();
@@ -20,10 +20,10 @@ public class IWMA extends Index implements IStockIndex{
         super("WMA");
     }
 
-    public ArrayList<IndexResult> calculate()
+    public ArrayList<IndicatorResult> calculate()
     {
         ArrayList<Double> WMA = new WMA(period, close_price).calculate();
-        ArrayList<IndexResult> results=new ArrayList<IndexResult>();
+        ArrayList<IndicatorResult> results=new ArrayList<IndicatorResult>();
         double diff,diffprev,openprice;
         Signal result;
 
@@ -42,11 +42,11 @@ public class IWMA extends Index implements IStockIndex{
 
                 if(diffprev>0 && diff<0) {
                     result = Signal.sell;
-                    results.add(new IndexResult(this.getName(), result,list.get(i+period-1).getDate(),close_price.get(i+period-1),openprice));
+                    results.add(new IndicatorResult(this.getName(), result,list.get(i+period-1).getDate(),close_price.get(i+period-1),openprice));
                 }
                 else if (diffprev<0 && diff>0) {
                     result = Signal.buy;
-                    results.add(new IndexResult(this.getName(), result,list.get(i+period-1).getDate(),close_price.get(i+period-1),openprice));
+                    results.add(new IndicatorResult(this.getName(), result,list.get(i+period-1).getDate(),close_price.get(i+period-1),openprice));
                 }
                 //date ,signal status, name, close price, open price of next day
             }

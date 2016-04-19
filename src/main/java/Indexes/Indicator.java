@@ -1,10 +1,10 @@
 package Indexes;
 
-public abstract class Index
+public abstract class Indicator
 {
     final String name;
 
-    public Index(String name)
+    public Indicator(String name)
     {
         this.name=name;
     }

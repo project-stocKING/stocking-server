@@ -6,12 +6,10 @@ import Tools.Signal;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Map;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 
 
 //Simple Moving Average as index
-public class  ISMA extends Index implements IStockIndex{
+public class  ISMA extends Indicator implements IStockIndicator {
 
     private int period;
     private ArrayList<Double> close_price = new ArrayList<Double>();
@@ -25,10 +23,10 @@ public class  ISMA extends Index implements IStockIndex{
     }
 
 
-    public ArrayList<IndexResult> calculate()
+    public ArrayList<IndicatorResult> calculate()
     {
         ArrayList<Double> SMA = new SMA(period, close_price).calculate();
-        ArrayList<IndexResult> results=new ArrayList<IndexResult>();
+        ArrayList<IndicatorResult> results=new ArrayList<IndicatorResult>();
         double diff,diffprev,openprice;
         Signal result;
 
@@ -46,11 +44,11 @@ public class  ISMA extends Index implements IStockIndex{
 
                 if(diffprev>0 && diff<0) {
                     result = Signal.sell;
-                    results.add(new IndexResult(this.getName(), result,list.get(i+period-1).getDate(),close_price.get(i+period-1),openprice));
+                    results.add(new IndicatorResult(this.getName(), result,list.get(i+period-1).getDate(),close_price.get(i+period-1),openprice));
                 }
                 else if (diffprev<0 && diff>0) {
                     result = Signal.buy;
-                    results.add(new IndexResult(this.getName(), result,list.get(i+period-1).getDate(),close_price.get(i+period-1),openprice));
+                    results.add(new IndicatorResult(this.getName(), result,list.get(i+period-1).getDate(),close_price.get(i+period-1),openprice));
                 }
                 //date ,signal status, name, close price, open price of next day
             }
