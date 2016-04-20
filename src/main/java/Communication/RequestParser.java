@@ -126,8 +126,6 @@ public class RequestParser extends Thread
         headerValue = lines[1];
     }
 
-
-
     private String readPostBody() throws IOException
     {
         String body = null;

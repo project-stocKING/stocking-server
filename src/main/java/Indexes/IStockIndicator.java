@@ -1,12 +1,11 @@
 package Indexes;
 
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Map;
 
-public interface IStockIndex
+public interface IStockIndicator
 {
-    ArrayList<IndexResult> calculate();
+    ArrayList<IndicatorResult> calculate();
     void initialize(Map<String, Object> parameters);
 }

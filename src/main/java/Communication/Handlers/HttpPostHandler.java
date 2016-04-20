@@ -1,7 +1,7 @@
 package Communication.Handlers;
 
-import Indexes.IndexManager;
-import Models.IndexInformation;
+import Indexes.IndicatorManager;
+import Models.IndicatorInformation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -28,9 +28,9 @@ public class HttpPostHandler
             try
             {
                 System.out.println(requestBody);
-                IndexInformation indexInformation = objectMapper.readValue(requestBody, IndexInformation.class);
-                IndexManager indexManager = new IndexManager(indexInformation);
-                response = indexManager.calculateIndex();
+                IndicatorInformation indicatorInformation = objectMapper.readValue(requestBody, IndicatorInformation.class);
+                IndicatorManager indicatorManager = new IndicatorManager(indicatorInformation);
+                response = indicatorManager.calculateIndex();
             }
             catch (IOException ex)
             {

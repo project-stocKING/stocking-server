@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 //Moving Average Convergence / Divergence
-public class MACD extends Index implements IStockIndex
+public class MACD extends Indicator implements IStockIndicator
 {
     private int fastLength, slowLength,signalLength;
     private ArrayList<Double> close_price= new ArrayList<Double>();
@@ -22,10 +22,10 @@ public class MACD extends Index implements IStockIndex
         super("MACD");
     }
 
-    public ArrayList<IndexResult> calculate() {
+    public ArrayList<IndicatorResult> calculate() {
         ArrayList<Double> fastEMA = new EMA(fastLength, close_price).calculate();
         ArrayList<Double> slowEMA = new EMA(slowLength, close_price).calculate();
-        ArrayList<IndexResult> results=new ArrayList<IndexResult>();
+        ArrayList<IndicatorResult> results=new ArrayList<IndicatorResult>();
         double avg=0,diff,diffprev, alpha=2/(signalLength+1),openprice;
         Signal result;
         boolean intersect;
@@ -60,11 +60,11 @@ public class MACD extends Index implements IStockIndex
 
                 if(diffprev>0 && diff<0) {
                     result = Signal.sell;
-                    results.add(new IndexResult(this.getName(), result,list.get(i).getDate(),close_price.get(i),openprice));
+                    results.add(new IndicatorResult(this.getName(), result,list.get(i).getDate(),close_price.get(i),openprice));
                 }
                 else if (diffprev<0 && diff>0) {
                     result = Signal.buy;
-                    results.add(new IndexResult(this.getName(), result,list.get(i).getDate(),close_price.get(i),openprice));
+                    results.add(new IndicatorResult(this.getName(), result,list.get(i).getDate(),close_price.get(i),openprice));
                 }
                 //date ,signal status, name, close price, open price of next day
             }

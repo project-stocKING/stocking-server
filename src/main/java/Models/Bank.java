@@ -1,15 +1,11 @@
 package Models;
 
-import Indexes.Index;
-import Indexes.IndexResult;
-import com.mongodb.util.JSON;
+import Indexes.IndicatorResult;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
 
 
 @Data
@@ -21,10 +17,10 @@ public class Bank {
     double sharesCost, soldSharesCost;
     double restOfBank;
     double budget;
-    IndexResult currentResult;
+    IndicatorResult currentResult;
 
 
-    public void calculateBank(ArrayList<IndexResult> indexResultArrayList){
+    public void calculateBank(ArrayList<IndicatorResult> indexResultArrayList){
 
         budget = indexResultArrayList.get(indexResultArrayList.size()-1).getBudgetAmount();
 
@@ -34,13 +30,10 @@ public class Bank {
             for(int i = indexResultArrayList.size() - 1; i >= 0; i--) {
                 currentResult = indexResultArrayList.get(i);
 
-
-
                 if (currentResult.buyOrSell().equals("buy")) {
 
                     updateBudget(currentResult);
                     buySignalAction(currentResult);
-
 
                 } else {
                     updateBudget(currentResult);
@@ -73,7 +66,7 @@ public class Bank {
         }
     }
 
-    private void buySignalAction(IndexResult currentResult)
+    private void buySignalAction(IndicatorResult currentResult)
     {
 
         sharesAmount = calculateSharesAmount(currentResult);
@@ -83,14 +76,14 @@ public class Bank {
         currentResult.setSharesAmount(sharesAmount);
     }
 
-    private boolean checkMoneyAvailable(IndexResult currentResult){
+    private boolean checkMoneyAvailable(IndicatorResult currentResult){
 
         if((currentResult.getBudgetAmount()>0) || (currentResult.getBudgetAmount() >= currentResult.getNextDayOpenValue())){
             return true;
         } else return false;
     }
 
-    private void sellSignalAction(IndexResult currentResult)
+    private void sellSignalAction(IndicatorResult currentResult)
     {
 
 
@@ -102,7 +95,7 @@ public class Bank {
 
     }
 
-    public int calculateSharesAmount(IndexResult indexResult){
+    public int calculateSharesAmount(IndicatorResult indexResult){
 
         int sharesAmount;
         sharesAmount = (int) Math.floor(budget/indexResult.getNextDayOpenValue());
@@ -110,7 +103,7 @@ public class Bank {
         return sharesAmount;
     }
 
-    public boolean findFirstBuy(ArrayList<IndexResult> indexResultArrayList){
+    public boolean findFirstBuy(ArrayList<IndicatorResult> indexResultArrayList){
         if(indexResultArrayList.size()>0) {
             if (indexResultArrayList.get(indexResultArrayList.size() - 1).getResult().getName().equals("buy")) {
                 return true;
@@ -118,11 +111,11 @@ public class Bank {
         }else return false;
     }
 
-    private void updateBudget(IndexResult currentResult){
+    private void updateBudget(IndicatorResult currentResult){
         currentResult.setBudgetAmount(budget);
     }
 
-    private boolean checkLastSignalSell(ArrayList<IndexResult> indexResultArrayList){
+    private boolean checkLastSignalSell(ArrayList<IndicatorResult> indexResultArrayList){
         if(indexResultArrayList.get(0).getResult().equals("sell")){
             return true;
         }

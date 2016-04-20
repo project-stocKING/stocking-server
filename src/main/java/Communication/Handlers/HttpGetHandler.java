@@ -1,13 +1,11 @@
 package Communication.Handlers;
 
 import Database.EndOfDayDatabaseConnection;
-import Models.IndexParameters;
-import Collections.IndexParametersCollection;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import Models.IndicatorParameters;
+import Collections.IndicatorParametersCollection;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * Created by mike on 16.04.16.
@@ -32,7 +30,7 @@ public class HttpGetHandler
 
         else if(value.equals("indexes"))
         {
-          getIndexes();
+          getIndicators();
 
         }
         else
@@ -57,12 +55,12 @@ public class HttpGetHandler
         }
     }
 
-    private void getIndexes()
+    private void getIndicators()
     {
-        ArrayList<IndexParameters> indexes = IndexParametersCollection.getIndexes();
+        ArrayList<IndicatorParameters> indicators = IndicatorParametersCollection.getIndicators();
 
         try {
-            response = objectMapper.writeValueAsString(indexes);
+            response = objectMapper.writeValueAsString(indicators);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

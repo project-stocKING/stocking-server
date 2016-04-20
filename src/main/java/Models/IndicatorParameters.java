@@ -3,7 +3,6 @@ package Models;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,17 +12,17 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class IndexParameters {
-    private String indexName;
+public class IndicatorParameters {
+    private String indicatorName;
     private Map<String, String> parameters;
 
-    public IndexParameters(){
-        this.indexName = "";
+    public IndicatorParameters(){
+        this.indicatorName = "";
         initiateParameters();
     }
 
-    public IndexParameters(String name){
-        this.indexName = name;
+    public IndicatorParameters(String name){
+        this.indicatorName = name;
         initiateParameters();
     }
 
@@ -44,7 +43,7 @@ public class IndexParameters {
     @Override
     public String toString(){
         return
-                "Name='" + indexName + '\'' +
+                "Name='" + indicatorName + '\'' +
                         ", parameters=" + parameters.toString();
     }
 }

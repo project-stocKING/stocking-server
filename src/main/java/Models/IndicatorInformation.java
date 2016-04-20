@@ -12,20 +12,20 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class IndexInformation {
-    private String indexName;
+public class IndicatorInformation {
+    private String indicatorName;
     private String stockName;
     private Map<String, Object> parameters;
 
-    public IndexInformation(){
-        indexName = "";
+    public IndicatorInformation(){
+        indicatorName = "";
         stockName = "";
         parameters = new HashMap<String, Object>();
     }
 
-    public IndexInformation(String indexName, String stockName)
+    public IndicatorInformation(String indicatorName, String stockName)
     {
-        this.indexName = indexName;
+        this.indicatorName = indicatorName;
         this.stockName = stockName;
         parameters = new HashMap<String, Object>();
     }
@@ -41,7 +41,7 @@ public class IndexInformation {
     @Override
     public String toString() {
         return
-                "Name='" + indexName + '\'' +
+                "Name='" + indicatorName + '\'' +
                         "StockName='" + stockName + '\'' +
                         ", parameters=" + parameters.toString();
 
