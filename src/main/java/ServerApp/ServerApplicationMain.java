@@ -14,7 +14,14 @@ public class ServerApplicationMain {
 
     public static void main( String[] args ) throws ParseException, UnknownHostException, FileNotFoundException {
 
-        RequestListener requestListener = new RequestListener(5001);
+        RequestListener requestListener;
+        int port = 5001;
+        if(args.length != 0)
+        {
+            port = Integer.parseInt(args[0]);
+        }
+
+        requestListener = new RequestListener(port);
         
     }
 
