@@ -1,6 +1,8 @@
 package ServerApp;
 
 import Communication.RequestListener;
+import Indexes.IndicatorManager;
+import Models.IndicatorInformation;
 
 import java.io.FileNotFoundException;
 import java.net.UnknownHostException;
@@ -22,7 +24,7 @@ public class ServerApplicationMain {
         }
 
         requestListener = new RequestListener(port);
-        
+
     }
 
 }
