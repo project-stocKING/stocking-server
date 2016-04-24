@@ -16,7 +16,7 @@ public class ServerApplicationMain {
 
     public static void main( String[] args ) throws ParseException, UnknownHostException, FileNotFoundException {
 
-        boolean testScenario = false;
+        boolean testScenario = true;
 
         if(testScenario){
             IndicatorInformation indicatorInformation = new IndicatorInformation("ISMA", "KGHM");
