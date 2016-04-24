@@ -31,9 +31,6 @@ public class IndicatorManager {
         this.endOfDayDatabaseConnection = new EndOfDayDatabaseConnection();
         try {
             this.stockCompanyArrayList = endOfDayDatabaseConnection.findByDate(indicatorInformation.getParameters().get("StartDate").toString(), indicatorInformation.getParameters().get("endDate").toString(), indicatorInformation.getStockName());
-            System.out.println(stockCompanyArrayList);
-            System.out.println(stockCompanyArrayList.size());
-
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -57,9 +54,6 @@ public class IndicatorManager {
         indicatorResultArrayList.get(indicatorResultArrayList.size()-1).setBudgetAmount(budget);
 
         bank.calculateBank(indicatorResultArrayList);
-        for (IndicatorResult indicatorResult : indicatorResultArrayList){
-            System.out.println(indicatorResult);
-        }
 
         try {
             json = JSONObject.valueToString(indicatorResultArrayList);
