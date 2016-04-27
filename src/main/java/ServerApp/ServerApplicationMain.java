@@ -1,12 +1,15 @@
 package ServerApp;
 
 import Communication.RequestListener;
+import Database.EndOfDayDatabaseConnection;
 import Indexes.IndicatorManager;
 import Models.IndicatorInformation;
+import Models.StockCompany;
 
 import java.io.FileNotFoundException;
 import java.net.UnknownHostException;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 
 /**
@@ -24,6 +27,8 @@ public class ServerApplicationMain {
         }
 
         requestListener = new RequestListener(port);
+
+
 
     }
 
