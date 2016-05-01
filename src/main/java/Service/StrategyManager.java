@@ -3,6 +3,7 @@ package Service;
 import Database.psql.PsqlConnector;
 import Entities.StrategyInformation;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class StrategyManager {
@@ -28,7 +29,11 @@ public class StrategyManager {
             //TODO: do calculation for each strategy
         }
 
-        psql.updateStrategies(strategies);
+        try {
+            psql.updateStrategies(strategies);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
