@@ -1,7 +1,7 @@
  package Indexes;
 
  import Collections.IndicatorCollection;
- import Database.EndOfDayDatabaseConnection;
+ import Database.mongo.EndOfDayDatabaseConnection;
  import Models.Bank;
  import Models.IndicatorInformation;
  import Models.StockCompany;

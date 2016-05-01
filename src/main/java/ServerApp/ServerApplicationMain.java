@@ -1,15 +1,18 @@
 package ServerApp;
 
 import Communication.RequestListener;
-import Database.EndOfDayDatabaseConnection;
-import Indexes.IndicatorManager;
-import Models.IndicatorInformation;
-import Models.StockCompany;
+import Database.psql.PsqlConnector;
+import Models.StrategyInformation;
+import Models.StrategyParameters;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.util.JSON;
 
 import java.io.FileNotFoundException;
 import java.net.UnknownHostException;
 import java.text.ParseException;
-import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 
 /**
@@ -27,8 +30,6 @@ public class ServerApplicationMain {
         }
 
         requestListener = new RequestListener(port);
-
-
 
     }
 

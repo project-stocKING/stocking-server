@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.ArrayList;
 
 /**
@@ -15,11 +16,10 @@ import java.util.ArrayList;
 @AllArgsConstructor
 public class StrategyInformation {
 
-    private ArrayList<IStockIndicator> indicators;
-    private String stockCompany;
+    private String content;
+    private Date created_at;
+    private Date updated_at;
+    private int user_id;
 
-    public void addIndicator(IStockIndicator indicator)
-    {
-        indicators.add(indicator);
-    }
+
 }

@@ -1,6 +1,6 @@
 package Communication.Handlers;
 
-import Database.EndOfDayDatabaseConnection;
+import Database.mongo.EndOfDayDatabaseConnection;
 import Models.IndicatorParameters;
 import Collections.IndicatorParametersCollection;
 import com.fasterxml.jackson.databind.ObjectMapper;
