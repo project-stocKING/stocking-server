@@ -1,6 +1,6 @@
 package Database.mongo;
 
-import Models.StockCompany;
+import Entities.StockCompany;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.*;
 import com.mongodb.util.JSON;

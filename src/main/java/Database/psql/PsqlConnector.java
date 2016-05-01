@@ -1,6 +1,6 @@
 package Database.psql;
 
-import Models.StrategyInformation;
+import Entities.StrategyInformation;
 
 import java.sql.*;
 import java.util.LinkedList;
@@ -29,8 +29,8 @@ public class PsqlConnector {
         }
     }
 
-    public void insert(StrategyInformation strategyInformation){
-        try{
+    public void insert(StrategyInformation strategyInformation) throws SQLException{
+
             connect();
 
             stmt = null;
@@ -51,30 +51,24 @@ public class PsqlConnector {
             stmt.close();
             connection.commit();
             connection.close();
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }
     }
 
     public List<StrategyInformation> findAllStrategies() {
         List<StrategyInformation> strategies = new LinkedList<StrategyInformation>();
-
-        connect();
         try {
+            connect();
             Statement stmt = connection.createStatement();
 
             String sql = "SELECT * FROM strategies";
             ResultSet rs = stmt.executeQuery(sql);
 
-            StrategyInformation si = new StrategyInformation();
-
             while(rs.next()){
+                StrategyInformation si = new StrategyInformation();
                 si.setContent(rs.getString("content"));
                 si.setCreated_at(rs.getDate("created_at"));
                 si.setUpdated_at(rs.getDate("updated_at"));
                 si.setUser_id(rs.getInt("user_id"));
-
+                si.setId(rs.getInt("id"));
                 strategies.add(si);
             }
 
@@ -87,6 +81,26 @@ public class PsqlConnector {
         }
 
         return strategies;
+    }
+
+    public void updateStrategies(List<StrategyInformation> strategies) throws SQLException{
+
+            connect();
+            stmt = connection.createStatement();
+            for(StrategyInformation strategy : strategies){
+
+                String sql = new StringBuilder().append("UPDATE strategies ")
+                        .append("SET updated_at = ")
+                        .append("\'").append(strategy.getUpdated_at()).append("\' ")
+                        .append("WHERE id = ").append(strategy.getId())
+                        .append(";").toString();
+
+                stmt.execute(sql);
+            }
+            stmt.close();
+            connection.commit();
+            connection.close();
+
     }
 
 

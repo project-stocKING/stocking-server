@@ -1,10 +1,12 @@
- package Indexes;
+ package Service;
 
  import Collections.IndicatorCollection;
  import Database.mongo.EndOfDayDatabaseConnection;
+ import Indexes.IStockIndicator;
+ import Indexes.IndicatorResult;
  import Models.Bank;
  import Models.IndicatorInformation;
- import Models.StockCompany;
+ import Entities.StockCompany;
  import org.json.JSONObject;
  import java.text.ParseException;
  import java.util.ArrayList;

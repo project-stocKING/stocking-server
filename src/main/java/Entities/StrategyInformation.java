@@ -1,4 +1,4 @@
-package Models;
+package Entities;
 
 import Indexes.IStockIndicator;
 import lombok.AllArgsConstructor;
@@ -16,10 +16,12 @@ import java.util.ArrayList;
 @AllArgsConstructor
 public class StrategyInformation {
 
+    private int id;
     private String content;
     private Date created_at;
     private Date updated_at;
     private int user_id;
+
 
 
 }

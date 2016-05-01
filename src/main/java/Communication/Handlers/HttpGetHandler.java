@@ -1,7 +1,7 @@
 package Communication.Handlers;
 
 import Database.mongo.EndOfDayDatabaseConnection;
-import Models.IndicatorParameters;
+import Parameters.IndicatorParameters;
 import Collections.IndicatorParametersCollection;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -25,12 +25,14 @@ public class HttpGetHandler
         response = "";
         if(value.equals("companies"))
         {
-           getCompanies();
+            getCompanies();
         }
-
         else if(value.equals("indexes"))
         {
-          getIndicators();
+            getIndicators();
+
+        }
+        else if(value.equals("calculateDailyStrategies")){
 
         }
         else
