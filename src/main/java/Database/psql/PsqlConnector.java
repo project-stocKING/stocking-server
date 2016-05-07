@@ -36,14 +36,15 @@ public class PsqlConnector {
             stmt = null;
             stmt = connection.createStatement();
 
-            String sql = new StringBuilder().append("INSERT INTO strategies (content, created_at, updated_at, user_id) ")
+            String sql = new StringBuilder().append("INSERT INTO strategies (content, created_at, updated_at, user_id, signal) ")
                     .append("VALUES (")
                     .append("\'")
                     .append(strategyInformation.getContent()).append("\'")
                     .append(", \'").append(strategyInformation.getCreated_at())
                     .append("\', \' ")
                     .append(strategyInformation.getUpdated_at()).append("\', ")
-                    .append(strategyInformation.getUser_id()).append(");").toString();
+                    .append(strategyInformation.getUser_id())
+                    .append(", \'").append(strategyInformation.getSignal()).append("\');").toString();
 
             System.out.println(sql);
 
@@ -69,6 +70,7 @@ public class PsqlConnector {
                 si.setUpdated_at(rs.getDate("updated_at"));
                 si.setUser_id(rs.getInt("user_id"));
                 si.setId(rs.getInt("id"));
+                si.setSignal(rs.getString("signal"));
                 strategies.add(si);
             }
 

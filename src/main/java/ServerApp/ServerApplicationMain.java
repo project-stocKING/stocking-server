@@ -3,6 +3,11 @@ package ServerApp;
 import Communication.RequestListener;
 import Database.psql.PsqlConnector;
 import Entities.StrategyInformation;
+import Parameters.IndicatorParameters;
+import Parameters.StrategyParameters;
+import Tools.Signal;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.FileNotFoundException;
 import java.net.UnknownHostException;
@@ -28,6 +33,41 @@ public class ServerApplicationMain {
 
         requestListener = new RequestListener(port);
 
+        /*PsqlConnector psql = new PsqlConnector();
+        StrategyParameters sp = new StrategyParameters();
+        IndicatorParameters ip = new IndicatorParameters();
+        ip.setIndicatorName("ISA");
+        ip.addParameter("StartDate", "01012016");
+        ip.addParameter("EndDate", "01022016");
+        ip.addParameter("perion", "20");
+        sp.addIndicator(ip);
+        sp.setSignalsToPass(1);
+
+        ObjectMapper om = new ObjectMapper();
+
+        StrategyInformation si = new StrategyInformation();
+        try {
+            String content = om.writeValueAsString(sp);
+            si.setContent(content);
+            si.setId(1);
+            si.setCreated_at(Calendar.getInstance().getTime());
+            si.setUpdated_at(Calendar.getInstance().getTime());
+            si.setUser_id(1);
+            si.setSignal("Buy");
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            psql.insert(si);
+            List<StrategyInformation> str = psql.findAllStrategies();
+            System.out.println(str);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
     }
+
+
 
 }

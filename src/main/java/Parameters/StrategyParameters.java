@@ -1,20 +1,26 @@
 package Parameters;
 
+import Indexes.Indicator;
 import lombok.Data;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 @Data
 public class StrategyParameters {
-    List<String> indicators;
+
+    List<IndicatorParameters> indicatorsWithParams;
+
     int signalsToPass;
 
     public StrategyParameters(){
-        indicators = new LinkedList<String>();
+        indicatorsWithParams = new LinkedList<IndicatorParameters>();
     }
 
-    public void addIndicator(String name){
-        indicators.add(name);
+    public void addIndicator(IndicatorParameters indicator){
+        indicatorsWithParams.add(indicator);
     }
+
 }
