@@ -1,6 +1,6 @@
 package Communication.Handlers;
 
-import Indexes.IndicatorManager;
+import Service.IndicatorManager;
 import Models.IndicatorInformation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

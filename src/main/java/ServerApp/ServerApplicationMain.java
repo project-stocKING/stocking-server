@@ -1,15 +1,15 @@
 package ServerApp;
 
 import Communication.RequestListener;
-import Database.EndOfDayDatabaseConnection;
-import Indexes.IndicatorManager;
-import Models.IndicatorInformation;
-import Models.StockCompany;
+import Database.psql.PsqlConnector;
+import Entities.StrategyInformation;
 
 import java.io.FileNotFoundException;
 import java.net.UnknownHostException;
+import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 
 /**
@@ -27,8 +27,6 @@ public class ServerApplicationMain {
         }
 
         requestListener = new RequestListener(port);
-
-
 
     }
 
