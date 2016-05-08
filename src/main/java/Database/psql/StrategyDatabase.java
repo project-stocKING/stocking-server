@@ -86,7 +86,8 @@ public class StrategyDatabase extends PsqlConnector {
 
             String sql = new StringBuilder().append("UPDATE strategies ")
                     .append("SET updated_at = ")
-                    .append("\'").append(strategy.getUpdated_at()).append("\' ")
+                    .append("\'").append(strategy.getUpdated_at()).append("\', ")
+                    .append("signal = \'").append(strategy.getSignal()).append("\'")
                     .append("WHERE id = ").append(strategy.getId())
                     .append(";").toString();
 

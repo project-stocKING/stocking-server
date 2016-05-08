@@ -13,9 +13,10 @@ public class EMA
 
     public EMA(int N, ArrayList<Double> c_price)
     {
+        System.out.println(c_price.size());
         this.N = N;
         alpha = 2.0 / (N + 1);
-        length=c_price.size()-N+1;
+        length = c_price.size()-N+1;
         this.c_price = new ArrayList<Double>(c_price);
         ema = new ArrayList<Double>(length);
     }

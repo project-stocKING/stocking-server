@@ -93,9 +93,11 @@ public class RequestParser extends Thread
     private void readHeaders() throws IOException
     {
         String line = brinp.readLine();
+        System.out.println(line);
 
         while(!line.isEmpty())
         {
+
             headers.add(line);
             line = brinp.readLine();
         }

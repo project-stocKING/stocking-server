@@ -39,6 +39,26 @@ public class ServerApplicationMain {
 
         requestListener = new RequestListener(port);
 
+        /*StrategyDatabase psql = new StrategyDatabase();
+        IndicatorInformation ii = new IndicatorInformation();
+        ii.setIndicatorName("IEMA");
+        ii.setStockName("KGHM");
+        ii.addParameter("period", "20");
+
+        StrategyParameters sp = new StrategyParameters();
+        sp.addIndicator(ii);
+        sp.setSignalsToPass(1);
+
+        ObjectMapper om = new ObjectMapper();
+        String content = om.writeValueAsString(sp);
+        StrategyInformation si = new StrategyInformation();
+        si.setContent(content);
+        si.setCreated_at(Calendar.getInstance().getTime());
+        si.setSignal("buy");
+        si.setUser_id(1);
+        si.setUpdated_at(Calendar.getInstance().getTime());
+        psql.insert(si);*/
+
         /*
 
         IndicatorInformation indicatorInformation = new IndicatorInformation("WMACrossover", "KGHM");

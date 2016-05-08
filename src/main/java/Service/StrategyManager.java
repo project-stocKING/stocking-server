@@ -42,8 +42,8 @@ public class StrategyManager {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
                 String startFormat = formatter.format(startDate);
                 String endFormat = formatter.format(endDate);
-                indParam.updateParam("endDate", endFormat);
-                indParam.updateParam("startDate", startFormat);
+                indParam.addParameter("endDate", endFormat);
+                indParam.addParameter("startDate", startFormat);
 
                 IndicatorManager indManager = new IndicatorManager(indParam);
                 indManager.calculateIndex();

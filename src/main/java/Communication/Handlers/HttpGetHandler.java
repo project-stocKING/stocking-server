@@ -34,6 +34,7 @@ public class HttpGetHandler
 
         }
         else if(value.equals("calculateDailyStrategies")){
+            System.out.println("Weszło!");
             StrategyManager manager = new StrategyManager();
             manager.calculateStrategies();
         }
