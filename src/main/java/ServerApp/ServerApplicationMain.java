@@ -3,13 +3,16 @@ package ServerApp;
 import Communication.RequestListener;
 import Database.psql.PsqlConnector;
 import Entities.StrategyInformation;
+import Models.Strategy;
 import Parameters.IndicatorParameters;
 import Parameters.StrategyParameters;
+import Service.StrategyService;
 import Tools.Signal;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -22,16 +25,21 @@ import java.util.List;
  */
 public class ServerApplicationMain {
 
-    public static void main( String[] args ) throws ParseException, UnknownHostException, FileNotFoundException {
+    public static void main( String[] args ) throws ParseException, IOException {
 
-        RequestListener requestListener;
+        /*RequestListener requestListener;
         int port = 5001;
         if(args.length != 0)
         {
             port = Integer.parseInt(args[0]);
         }
 
-        requestListener = new RequestListener(port);
+        requestListener = new RequestListener(port);*/
+
+        PsqlConnector psql = new PsqlConnector();
+        List<Strategy> strategies = psql.findAllStrategies();
+        System.out.println(strategies);
+
 
         /*PsqlConnector psql = new PsqlConnector();
         StrategyParameters sp = new StrategyParameters();

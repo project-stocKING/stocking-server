@@ -1,7 +1,10 @@
 package Database.psql;
 
 import Entities.StrategyInformation;
+import Models.Strategy;
+import Service.StrategyService;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,6 +13,7 @@ public class PsqlConnector {
 
     private Connection connection;
     private Statement stmt;
+    private StrategyService strategyService;
 
     //TODO: Change to desired database when it will be ready
     public void connect() {
@@ -52,8 +56,10 @@ public class PsqlConnector {
             connection.close();
     }
 
-    public List<StrategyInformation> findAllStrategies() {
-        List<StrategyInformation> strategies = new LinkedList<StrategyInformation>();
+    public List<Strategy> findAllStrategies() {
+        List<Strategy> strategies = new LinkedList<Strategy>();
+        strategyService = new StrategyService();
+
         try {
             connect();
             Statement stmt = connection.createStatement();
@@ -69,7 +75,14 @@ public class PsqlConnector {
                 si.setUser_id(rs.getInt("user_id"));
                 si.setId(rs.getInt("id"));
                 si.setSignal(rs.getString("signal"));
-                strategies.add(si);
+
+                try {
+                    Strategy strategy = strategyService.StrategyInformationToStrategy(si);
+                    strategies.add(strategy);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
 
             stmt.close();

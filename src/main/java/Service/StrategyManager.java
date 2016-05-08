@@ -2,6 +2,7 @@ package Service;
 
 import Database.psql.PsqlConnector;
 import Entities.StrategyInformation;
+import Models.Strategy;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -15,7 +16,7 @@ public class StrategyManager {
     }
 
     public void calculateStrategies(){
-        List<StrategyInformation> strategies = psql.findAllStrategies();
+        List<Strategy> strategies = psql.findAllStrategies();
 
         //TODO: implement calculating strategies
         /**
@@ -26,15 +27,7 @@ public class StrategyManager {
          *
          */
 
-        for(StrategyInformation strategy : strategies){
-            //TODO: do calculation for each strategy
-        }
 
-        try {
-            psql.updateStrategies(strategies);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
 }
