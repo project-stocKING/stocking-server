@@ -11,8 +11,8 @@ public class Sender {
 
 
     public void sendEmail(String to, String subject, String textMsg) throws MessagingException, IOException {
-        final String username = "cashis2903@gmail.com"; // change to our email
-        final String password = "dupadupa2";
+        final String username = "stockingservice@gmail.com"; // change to our email
+        final String password = "stockingserver";
 
         Properties props = new Properties();
         props.put("mail.smtp.starttls.enable", "true");
