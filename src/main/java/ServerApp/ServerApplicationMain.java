@@ -1,7 +1,6 @@
 package ServerApp;
 
 import Communication.RequestListener;
-
 import javax.mail.MessagingException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -19,19 +18,16 @@ public class ServerApplicationMain {
 
     public static void main( String[] args ) throws ParseException, UnknownHostException, FileNotFoundException, MessagingException, IOException {
 
-            RequestListener requestListener;
-            int port = 5001;
-            if(args.length != 0)
-            {
-                port = Integer.parseInt(args[0]);
-            }
-
-            requestListener = new RequestListener(port);
+        RequestListener requestListener;
+        int port = 5001;
+        if(args.length != 0)
+        {
+            port = Integer.parseInt(args[0]);
         }
 
         requestListener = new RequestListener(port);
     }
 
-
-
+    //requestListener = new RequestListener(port);
 }
+
