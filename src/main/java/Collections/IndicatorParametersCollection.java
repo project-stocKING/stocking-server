@@ -52,6 +52,31 @@ public class IndicatorParametersCollection {
         MACD.addParameter("signalLength", "integer");
         indicators.add(MACD);
 
+        IndicatorParameters ATR = new IndicatorParameters("ATR");
+        ATR.addParameter("period", "integer");
+        ATR.addParameter("ATRperiod", "integer");
+        indicators.add(ATR);
+
+        IndicatorParameters EMACrossover = new IndicatorParameters("EMACrossover");
+        EMACrossover.addParameter("short_period", "integer");
+        EMACrossover.addParameter("long_period", "integer");
+        indicators.add(EMACrossover);
+
+        IndicatorParameters SMACrossover = new IndicatorParameters("SMACrossover");
+        SMACrossover.addParameter("short_period", "integer");
+        SMACrossover.addParameter("long_period", "integer");
+        indicators.add(SMACrossover);
+
+        IndicatorParameters WMACrossover = new IndicatorParameters("WMACrossover");
+        WMACrossover.addParameter("short_period", "integer");
+        WMACrossover.addParameter("long_period", "integer");
+        indicators.add(WMACrossover);
+
+        IndicatorParameters SMMACrossover = new IndicatorParameters("SMMACrossover");
+        SMMACrossover.addParameter("short_period", "integer");
+        SMMACrossover.addParameter("long_period", "integer");
+        indicators.add(SMMACrossover);
+
         //TODO: add remaining indicators with their parameters
     }
 

@@ -1,15 +1,11 @@
 package ServerApp;
 
 import Communication.RequestListener;
-<<<<<<< HEAD
-import Indexes.IndicatorManager;
+import Service.IndicatorManager;
 import Models.IndicatorInformation;
-=======
 import Database.psql.PsqlConnector;
 import Email.Sender;
 import Entities.StrategyInformation;
->>>>>>> master
-
 import javax.mail.MessagingException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -28,18 +24,15 @@ public class ServerApplicationMain {
     public static void main( String[] args ) throws ParseException, UnknownHostException, FileNotFoundException, MessagingException, IOException {
 
         boolean testScenario = true;
-
-            RequestListener requestListener;
-            int port = 5001;
-            if(args.length != 0)
-            {
-                port = Integer.parseInt(args[0]);
-            }
+        RequestListener requestListener;
+        int port = 5001;
+        if(args.length != 0)
+        {
+            port = Integer.parseInt(args[0]);
+        }
 
             requestListener = new RequestListener(port);
         }
-
-        requestListener = new RequestListener(port);
-    }
-
 }
+
+

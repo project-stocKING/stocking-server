@@ -37,5 +37,6 @@ public class IndicatorCollection
         indicators.put("SMACrossover", new SMACrossover());
         indicators.put("SMMACrossover", new SMMACrossover());
         indicators.put("WMACrossover", new WMACrossover());
+        indicators.put("ATR", new ATR());
     }
 }
