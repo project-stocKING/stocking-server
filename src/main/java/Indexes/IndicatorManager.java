@@ -30,7 +30,7 @@ public class IndicatorManager {
         this.indicatorResultArrayList = new ArrayList<IndicatorResult>();
         this.endOfDayDatabaseConnection = new EndOfDayDatabaseConnection();
         try {
-            this.stockCompanyArrayList = endOfDayDatabaseConnection.findByDate(indicatorInformation.getParameters().get("StartDate").toString(), indicatorInformation.getParameters().get("endDate").toString(), indicatorInformation.getStockName());
+            this.stockCompanyArrayList = endOfDayDatabaseConnection.findByDate(indicatorInformation.getParameters().get("startDate").toString(),indicatorInformation.getParameters().get("endDate").toString(), indicatorInformation.getStockName());
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -42,17 +42,12 @@ public class IndicatorManager {
         String json = null;
 
         IStockIndicator indicator = IndicatorCollection.getIndex(indicatorInformation.getIndicatorName());
-        indicatorInformation.addParameter("stockList" , stockCompanyArrayList);
+        indicatorInformation.addParameter("stockList", stockCompanyArrayList);
 
         indicator.initialize(indicatorInformation.getParameters());
         indicatorResultArrayList = indicator.calculate();
-
-        double budget = Double.parseDouble(indicatorInformation.getParameters().get("budget").toString());
-
         Bank bank = new Bank();
-
-        indicatorResultArrayList.get(indicatorResultArrayList.size()-1).setBudgetAmount(budget);
-
+        indicatorResultArrayList.get(indicatorResultArrayList.size()-1).setBudgetAmount(Double.parseDouble(indicatorInformation.getParameters().get("budget").toString()));
         bank.calculateBank(indicatorResultArrayList);
 
         try {
@@ -64,6 +59,8 @@ public class IndicatorManager {
         }
 
         return json;
+
+
     }
 }
 

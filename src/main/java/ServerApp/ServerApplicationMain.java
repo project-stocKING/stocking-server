@@ -1,12 +1,15 @@
 package ServerApp;
 
 import Communication.RequestListener;
+import Database.EndOfDayDatabaseConnection;
 import Indexes.IndicatorManager;
 import Models.IndicatorInformation;
+import Models.StockCompany;
 
 import java.io.FileNotFoundException;
 import java.net.UnknownHostException;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 
 /**
@@ -16,28 +19,17 @@ public class ServerApplicationMain {
 
     public static void main( String[] args ) throws ParseException, UnknownHostException, FileNotFoundException {
 
-        boolean testScenario = true;
-
-        if(testScenario){
-            IndicatorInformation indicatorInformation = new IndicatorInformation("ISMA", "KGHM");
-            indicatorInformation.addParameter("StartDate", "20110408");
-            indicatorInformation.addParameter("endDate", "20120824");
-            indicatorInformation.addParameter("period", "50");
-            indicatorInformation.addParameter("budget", "10000");
-            IndicatorManager indicatorManager = new IndicatorManager(indicatorInformation);
-            String json = indicatorManager.calculateIndex();
-            System.out.print(json.toString());
+        RequestListener requestListener;
+        int port = 5001;
+        if(args.length != 0)
+        {
+            port = Integer.parseInt(args[0]);
         }
-        else{
-            RequestListener requestListener;
-            int port = 5001;
-            if(args.length != 0)
-            {
-                port = Integer.parseInt(args[0]);
-            }
 
-            requestListener = new RequestListener(port);
-        }
+        requestListener = new RequestListener(port);
+
+
+
     }
 
 }
