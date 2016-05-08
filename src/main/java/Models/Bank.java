@@ -89,8 +89,6 @@ public class Bank {
             for(int i=indexResultArrayList.size()-2; i>=0; i--){
 
                 currentResult = indexResultArrayList.get(i);
-
-
                 if(currentResult.buyOrSell().equals("buy")){
 
                     update(currentResult);
