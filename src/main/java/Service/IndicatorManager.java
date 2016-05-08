@@ -38,6 +38,9 @@ public class IndicatorManager {
         }
     }
 
+     public IndicatorResult getTodaysResult() {
+         return indicatorResultArrayList.get(indicatorResultArrayList.size()-1);
+     }
 
     public String calculateIndex() {
 
