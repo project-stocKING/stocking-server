@@ -1,14 +1,6 @@
 package ServerApp;
 
 import Communication.RequestListener;
-<<<<<<< HEAD
-import Indexes.IndicatorManager;
-import Models.IndicatorInformation;
-=======
-import Database.psql.PsqlConnector;
-import Email.Sender;
-import Entities.StrategyInformation;
->>>>>>> master
 
 import javax.mail.MessagingException;
 import java.io.FileNotFoundException;
@@ -16,8 +8,8 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.Calendar;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 /**
@@ -26,8 +18,6 @@ import java.util.List;
 public class ServerApplicationMain {
 
     public static void main( String[] args ) throws ParseException, UnknownHostException, FileNotFoundException, MessagingException, IOException {
-
-        boolean testScenario = true;
 
             RequestListener requestListener;
             int port = 5001;
@@ -41,5 +31,7 @@ public class ServerApplicationMain {
 
         requestListener = new RequestListener(port);
     }
+
+
 
 }

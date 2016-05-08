@@ -22,5 +22,6 @@ public class StrategyInformation {
     private Date created_at;
     private Date updated_at;
     private int user_id;
+    private String signal;
 
 }

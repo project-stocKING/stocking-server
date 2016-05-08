@@ -33,6 +33,9 @@ public class IndicatorInformation {
     public void addParameter(String type, Object parameter ){
         parameters.put(type ,parameter);
     }
+    public void updateParam (String key, Object value) {
+        parameters.replace(key, value);
+    }
 
     public Map<String, Object> getParameters(){
         return parameters;

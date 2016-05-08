@@ -1,5 +1,6 @@
 package Parameters;
 
+import Models.IndicatorInformation;
 import lombok.Data;
 
 import java.util.LinkedList;
@@ -7,14 +8,17 @@ import java.util.List;
 
 @Data
 public class StrategyParameters {
-    List<String> indicators;
+
+    List<IndicatorInformation> indicatorsWithParams;
+
     int signalsToPass;
 
     public StrategyParameters(){
-        indicators = new LinkedList<String>();
+        indicatorsWithParams = new LinkedList<IndicatorInformation>();
     }
 
-    public void addIndicator(String name){
-        indicators.add(name);
+    public void addIndicator(IndicatorInformation indicator){
+        indicatorsWithParams.add(indicator);
     }
+
 }

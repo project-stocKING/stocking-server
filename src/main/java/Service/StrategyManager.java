@@ -1,9 +1,17 @@
 package Service;
 
 import Database.psql.PsqlConnector;
-import Entities.StrategyInformation;
+import Indexes.IndicatorResult;
+import Models.IndicatorInformation;
+import Models.Strategy;
+import Parameters.StrategyParameters;
+import Tools.Signal;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 public class StrategyManager {
@@ -15,22 +23,47 @@ public class StrategyManager {
     }
 
     public void calculateStrategies(){
-        List<StrategyInformation> strategies = psql.findAllStrategies();
+        List<Strategy> strategies = psql.findAllStrategies();
+        List<Strategy> updatedStrategies = new LinkedList<Strategy>();
+        int counter = 0;
 
-        //TODO: implement calculating strategies
-        /**
-         * For every strategy in database, retrive it's parameters and calculate
-         * indicators that are used within it. Then check if required amount gave
-         * signal to sell / buy
-         *
-         */
+        for (Strategy strategy: strategies) {
+            StrategyParameters strParam = strategy.getStrategyParameters();
+            List<IndicatorInformation> indicatorsWithParams = strParam.getIndicatorsWithParams();
+            for (IndicatorInformation indParam : indicatorsWithParams) {
 
-        for(StrategyInformation strategy : strategies){
-            //TODO: do calculation for each strategy
+                Date startDate = new Date();
+                Date endDate = new Date();
+                Calendar c = Calendar.getInstance();
+                c.add(Calendar.DATE, -Integer.parseInt(indParam.getParameters().get("period").toString()));
+                startDate.setTime(c.getTime().getTime());
+
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+                String startFormat = formatter.format(startDate);
+                String endFormat = formatter.format(endDate);
+                indParam.updateParam("endDate", endFormat);
+                indParam.updateParam("startDate", startFormat);
+
+                IndicatorManager indManager = new IndicatorManager(indParam);
+                indManager.calculateIndex();
+                IndicatorResult indResult = indManager.getTodaysResult();
+                if(indResult != null) {
+                    if(endFormat.equals(indResult.getDate())) {
+                        counter++;
+                    }
+                }
+
+            }
+            if(counter >= strParam.getSignalsToPass()) {
+                strategy.setUpdated_at(new Date());
+                strategy.setSignal(Signal.buy);
+                updatedStrategies.add(strategy);
+            }
         }
 
+
         try {
-            psql.updateStrategies(strategies);
+            psql.updateStrategies(updatedStrategies);
         } catch (SQLException e) {
             e.printStackTrace();
         }
