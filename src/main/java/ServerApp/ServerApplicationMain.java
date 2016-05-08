@@ -22,7 +22,7 @@ public class ServerApplicationMain {
 
     public static void main( String[] args ) throws ParseException, UnknownHostException, FileNotFoundException, MessagingException, IOException {
 
-     /*   RequestListener requestListener;
+        RequestListener requestListener;
         int port = 5001;
         if(args.length != 0)
         {
@@ -30,11 +30,6 @@ public class ServerApplicationMain {
         }
 
         requestListener = new RequestListener(port);
-*/
-
-        Sender sender = new Sender();
-
-        sender.sendEmail("patryk.schaffner@gmail.com", "Test", "Dostaniemy 2.0");
     }
 
 }
