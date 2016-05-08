@@ -1,6 +1,7 @@
 package Service;
 
 import Database.psql.PsqlConnector;
+import Database.psql.StrategyDatabase;
 import Indexes.IndicatorResult;
 import Models.IndicatorInformation;
 import Models.Strategy;
@@ -16,10 +17,10 @@ import java.util.List;
 
 public class StrategyManager {
 
-    private final PsqlConnector psql;
+    private final StrategyDatabase psql;
 
     public StrategyManager(){
-        psql = new PsqlConnector();
+        psql = new StrategyDatabase();
     }
 
     public void calculateStrategies(){

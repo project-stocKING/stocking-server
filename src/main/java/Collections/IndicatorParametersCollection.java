@@ -30,19 +30,19 @@ public class IndicatorParametersCollection {
     {
         indicators = new ArrayList<IndicatorParameters>();
 
-        IndicatorParameters IEMA = new IndicatorParameters("IEMA");
+        IndicatorParameters IEMA = new IndicatorParameters("EMA");
         IEMA.addParameter("period", "integer");
         indicators.add(IEMA);
 
-        IndicatorParameters ISMA = new IndicatorParameters("ISMA");
+        IndicatorParameters ISMA = new IndicatorParameters("SMA");
         ISMA.addParameter("period", "integer");
         indicators.add(ISMA);
 
-        IndicatorParameters ISMMA = new IndicatorParameters("ISMMA");
+        IndicatorParameters ISMMA = new IndicatorParameters("SMMA");
         ISMMA.addParameter("period", "integer");
         indicators.add(ISMMA);
 
-        IndicatorParameters IWMA = new IndicatorParameters("IWMA");
+        IndicatorParameters IWMA = new IndicatorParameters("WMA");
         IWMA.addParameter("period", "integer");
         indicators.add(IWMA);
 
@@ -76,8 +76,6 @@ public class IndicatorParametersCollection {
         SMMACrossover.addParameter("short_period", "integer");
         SMMACrossover.addParameter("long_period", "integer");
         indicators.add(SMMACrossover);
-
-        //TODO: add remaining indicators with their parameters
     }
 
 
