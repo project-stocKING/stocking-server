@@ -1,5 +1,5 @@
 package Indexes;
-import Models.StockCompany;
+import Entities.StockCompany;
 import Tools.Signal;
 import Tools.WMA;
 

@@ -1,14 +1,10 @@
-package Database;
+package Database.mongo;
 
-import Models.StockCompany;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import Entities.StockCompany;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.*;
 import com.mongodb.util.JSON;
 import org.bson.Document;
-import org.omg.CORBA.Environment;
 
 import java.net.UnknownHostException;
 import java.text.ParseException;

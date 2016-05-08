@@ -1,6 +1,6 @@
 package Collections;
 
-import Models.IndicatorParameters;
+import Parameters.IndicatorParameters;
 
 import java.util.ArrayList;
 
