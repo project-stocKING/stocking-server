@@ -51,6 +51,8 @@ public class IndicatorParametersCollection {
         MACD.addParameter("shortLength", "integer");
         MACD.addParameter("signalLength", "integer");
         indicators.add(MACD);
+
+        //TODO: add remaining indicators with their parameters
     }
 
 

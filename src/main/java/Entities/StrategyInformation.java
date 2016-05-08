@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by mike on 21.04.16.
@@ -21,7 +22,5 @@ public class StrategyInformation {
     private Date created_at;
     private Date updated_at;
     private int user_id;
-
-
 
 }

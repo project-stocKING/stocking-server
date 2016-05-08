@@ -12,7 +12,7 @@ public class IndicatorCollection
 {
     private static IndicatorCollection collection;
 
-    private static Map<String, IStockIndicator> indexes;
+    private static Map<String, IStockIndicator> indicators;
 
     private IndicatorCollection(){
         initializeIndicators();
@@ -21,17 +21,21 @@ public class IndicatorCollection
     public static IStockIndicator getIndex(String indexName)
     {
         if(collection == null) collection = new IndicatorCollection();
-        return indexes.get(indexName);
+        return indicators.get(indexName);
     }
 
     private static void initializeIndicators()
     {
-        indexes = new HashMap<String, IStockIndicator>();
+        indicators = new HashMap<String, IStockIndicator>();
 
-        indexes.put("MACD", new MACD());
-        indexes.put("ISMA", new ISMA());
-        indexes.put("IEMA", new IEMA());
-        indexes.put("ISMMA", new ISMMA());
-        indexes.put("IWMA", new IWMA());
+        indicators.put("MACD", new MACD());
+        indicators.put("ISMA", new ISMA());
+        indicators.put("IEMA", new IEMA());
+        indicators.put("ISMMA", new ISMMA());
+        indicators.put("IWMA", new IWMA());
+        indicators.put("EMACrossover", new EMACrossover());
+        indicators.put("SMACrossover", new SMACrossover());
+        indicators.put("SMMACrossover", new SMMACrossover());
+        indicators.put("WMACrossover", new WMACrossover());
     }
 }
