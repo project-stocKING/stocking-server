@@ -19,7 +19,8 @@ public class StrategyManager {
 
         //TODO: implement calculating strategies
         /**
-         * For every strategy in database, retrive it's parameters and calculate
+         *
+         * For every strategy in database, retrieve it's parameters and calculate
          * indicators that are used within it. Then check if required amount gave
          * signal to sell / buy
          *

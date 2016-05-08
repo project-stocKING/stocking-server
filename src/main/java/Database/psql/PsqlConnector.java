@@ -46,8 +46,6 @@ public class PsqlConnector {
                     .append(strategyInformation.getUser_id())
                     .append(", \'").append(strategyInformation.getSignal()).append("\');").toString();
 
-            System.out.println(sql);
-
             stmt.execute(sql);
             stmt.close();
             connection.commit();
@@ -85,6 +83,7 @@ public class PsqlConnector {
         return strategies;
     }
 
+    //TODO: correct updating
     public void updateStrategies(List<StrategyInformation> strategies) throws SQLException{
 
             connect();
