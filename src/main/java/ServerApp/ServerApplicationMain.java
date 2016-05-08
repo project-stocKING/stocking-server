@@ -1,6 +1,9 @@
 package ServerApp;
 
 import Communication.RequestListener;
+import Models.IndicatorInformation;
+import Service.IndicatorManager;
+
 import javax.mail.MessagingException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -26,8 +29,17 @@ public class ServerApplicationMain {
         }
 
         requestListener = new RequestListener(port);
+        /*
+        IndicatorInformation indicatorInformation = new IndicatorInformation("WMACrossover", "KGHM");
+        indicatorInformation.addParameter("startDate", "20110201");
+        indicatorInformation.addParameter("endDate", "20140601");
+        indicatorInformation.addParameter("short_period", "45");
+        indicatorInformation.addParameter("long_period", "100");
+        indicatorInformation.addParameter("budget", "10000");
+        IndicatorManager indicatorManager = new IndicatorManager(indicatorInformation);
+        String json = indicatorManager.calculateIndex();
+        System.out.print(json);
+        */
     }
-
-    //requestListener = new RequestListener(port);
 }
 
