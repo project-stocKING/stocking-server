@@ -97,11 +97,11 @@ public class PsqlConnector {
     }
 
     //TODO: correct updating
-    public void updateStrategies(List<StrategyInformation> strategies) throws SQLException{
+    public void updateStrategies(List<Strategy> strategies) throws SQLException{
 
             connect();
             stmt = connection.createStatement();
-            for(StrategyInformation strategy : strategies){
+            for(Strategy strategy : strategies){
 
                 String sql = new StringBuilder().append("UPDATE strategies ")
                         .append("SET updated_at = ")

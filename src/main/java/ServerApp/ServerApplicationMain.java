@@ -16,8 +16,8 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.Calendar;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 /**
@@ -36,9 +36,11 @@ public class ServerApplicationMain {
 
         requestListener = new RequestListener(port);*/
 
-        PsqlConnector psql = new PsqlConnector();
-        List<Strategy> strategies = psql.findAllStrategies();
-        System.out.println(strategies);
+      //  PsqlConnector psql = new PsqlConnector();
+        //List<Strategy> strategies = psql.findAllStrategies();
+        //System.out.println(strategies);
+
+
 
 
         /*PsqlConnector psql = new PsqlConnector();
