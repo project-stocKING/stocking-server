@@ -1,6 +1,5 @@
 package Models;
 
-import Indexes.Indicator;
 import Indexes.IndicatorResult;
 import lombok.AllArgsConstructor;
 import lombok.Data;

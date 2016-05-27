@@ -2,7 +2,7 @@ package Database.psql;
 
 
 import Entities.StrategyInformation;
-import Models.Strategy;
+import Entities.Strategy;
 import Service.StrategyService;
 
 import java.io.IOException;

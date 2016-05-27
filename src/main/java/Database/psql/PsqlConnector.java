@@ -1,13 +1,10 @@
 package Database.psql;
 
-import Entities.StrategyInformation;
-import Models.Strategy;
 import Service.StrategyService;
 
-import java.io.IOException;
-import java.sql.*;
-import java.util.LinkedList;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 
 public class PsqlConnector
 {
