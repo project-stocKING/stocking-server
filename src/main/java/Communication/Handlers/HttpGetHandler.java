@@ -3,6 +3,7 @@ package Communication.Handlers;
 import Database.mongo.EndOfDayDatabaseConnection;
 import Parameters.IndicatorParameters;
 import Collections.IndicatorParametersCollection;
+import Service.StrategyManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
@@ -33,7 +34,8 @@ public class HttpGetHandler
 
         }
         else if(value.equals("calculateDailyStrategies")){
-
+            StrategyManager manager = new StrategyManager();
+            manager.calculateStrategies();
         }
         else
         {

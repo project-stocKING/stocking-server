@@ -1,4 +1,4 @@
-package Models;
+package Entities;
 
 import Parameters.StrategyParameters;
 import Tools.Signal;

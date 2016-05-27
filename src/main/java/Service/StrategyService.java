@@ -1,7 +1,7 @@
 package Service;
 
 import Entities.StrategyInformation;
-import Models.Strategy;
+import Entities.Strategy;
 import Parameters.StrategyParameters;
 import Tools.Signal;
 import com.fasterxml.jackson.databind.ObjectMapper;

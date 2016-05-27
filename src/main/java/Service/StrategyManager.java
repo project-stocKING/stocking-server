@@ -1,9 +1,9 @@
 package Service;
 
-import Database.psql.PsqlConnector;
+import Database.psql.StrategyDatabase;
 import Indexes.IndicatorResult;
 import Models.IndicatorInformation;
-import Models.Strategy;
+import Entities.Strategy;
 import Parameters.StrategyParameters;
 import Tools.Signal;
 
@@ -16,10 +16,10 @@ import java.util.List;
 
 public class StrategyManager {
 
-    private final PsqlConnector psql;
+    private final StrategyDatabase psql;
 
     public StrategyManager(){
-        psql = new PsqlConnector();
+        psql = new StrategyDatabase();
     }
 
     public void calculateStrategies(){
@@ -58,6 +58,7 @@ public class StrategyManager {
                 strategy.setUpdated_at(new Date());
                 strategy.setSignal(Signal.buy);
                 updatedStrategies.add(strategy);
+                // send mail to client
             }
         }
 
