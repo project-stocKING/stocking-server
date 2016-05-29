@@ -29,10 +29,10 @@ public class IndicatorCollection
         indicators = new HashMap<String, IStockIndicator>();
 
         indicators.put("MACD", new MACD());
-        indicators.put("ISMA", new ISMA());
-        indicators.put("IEMA", new IEMA());
-        indicators.put("ISMMA", new ISMMA());
-        indicators.put("IWMA", new IWMA());
+        indicators.put("SMA", new ISMA());
+        indicators.put("EMA", new IEMA());
+        indicators.put("SMMA", new ISMMA());
+        indicators.put("WMA", new IWMA());
         indicators.put("EMACrossover", new EMACrossover());
         indicators.put("SMACrossover", new SMACrossover());
         indicators.put("SMMACrossover", new SMMACrossover());
